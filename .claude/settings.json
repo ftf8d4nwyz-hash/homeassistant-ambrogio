@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_get_state",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_search",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_get_automation",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_set_automation",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_set_script",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_set_helper",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_get_script",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_config_list_helpers",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_get_entity",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_list_floors_areas",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_get_overview",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_eval_template",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_get_history",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_get_logs",
+      "mcp__44e96123-c0f8-4e20-8baa-907fb1e88df4__ha_call_service"
+    ]
+  }
+}
