@@ -143,7 +143,7 @@ class MatrixHistoryCard extends HTMLElement {
         .list { padding:2px 8px 6px; }
         .row { display:grid; grid-template-columns:auto 1fr auto; gap:12px;
           align-items:center; padding:11px 8px; border-radius:10px;
-          animation:in .35s ease both; }
+          animation:in .35s ease both; cursor:pointer; }
         .row:hover { background:rgba(0,234,255,.05);
           box-shadow:inset 0 0 0 1px rgba(0,234,255,.2); }
         .row + .row { border-top:1px solid rgba(179,136,255,.18); }
@@ -209,6 +209,12 @@ class MatrixHistoryCard extends HTMLElement {
       </ha-card>`;
     this._listEl = this._root.querySelector(".list");
     this._footEl = this._root.querySelector(".foot");
+    this._listEl.addEventListener("click", (e) => {
+      const row = e.target.closest(".row");
+      if (!row) return;
+      const eid = row.getAttribute("data-eid");
+      if (eid) this._moreInfo(eid);
+    });
     this._render();
     if (!this._clock)
       this._clock = setInterval(() => { this._tickClock(); this._paintTimes(); },
@@ -305,7 +311,8 @@ class MatrixHistoryCard extends HTMLElement {
           const abs = new Date(r.when).toLocaleString("fr-FR", {
             weekday: "short", day: "2-digit", month: "2-digit",
             hour: "2-digit", minute: "2-digit" });
-          return '<div class="row" style="animation-delay:' + (i * 30) +
+          return '<div class="row" data-eid="' + this._esc(r.eid) +
+            '" style="animation-delay:' + (i * 30) +
             'ms"><div class="ic">' + iconFor(r.eid, r.state) +
             '</div><div class="mid"><div class="l1"><span class="nm">' +
             this._esc(r.name) + '</span><span class="pill k-' + kind + '">' +
@@ -344,6 +351,13 @@ class MatrixHistoryCard extends HTMLElement {
   _esc(s) {
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // Ouvre la fiche détaillée (more-info) de l'entité au clic sur une ligne
+  _moreInfo(eid) {
+    const ev = new Event("hass-more-info", { bubbles: true, composed: true });
+    ev.detail = { entityId: eid };
+    this.dispatchEvent(ev);
   }
 }
 
