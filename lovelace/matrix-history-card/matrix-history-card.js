@@ -364,7 +364,9 @@ class MatrixHistoryCard extends HTMLElement {
   }
 }
 
-customElements.define("matrix-history-card", MatrixHistoryCard);
+if (!customElements.get("matrix-history-card")) {
+  customElements.define("matrix-history-card", MatrixHistoryCard);
+}
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "matrix-history-card",
