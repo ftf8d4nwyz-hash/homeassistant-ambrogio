@@ -1,9 +1,8 @@
 /*
- * Matrix History Card — journal d'activité lisible & esthétique pour HA
- * v3 : plus de défilement. Une ligne par appareil (dernier état), icônes
- * claires, pastilles d'état colorées, étiquettes coût/énergie/eau, horloge
- * live + bandeau de valeurs. Fond sombre sobre, accents verts, animations
- * discrètes.
+ * Matrix History Card — journal d'activité NÉON CYBERPUNK pour HA
+ * v4 : cyan + magenta, halos néon, scanlines discrètes. Une ligne par
+ * appareil (dernier état), icônes claires, pastilles d'état néon, étiquettes
+ * coût/énergie/eau, horloge live + bandeau de valeurs. Lisible avant tout.
  *
  * Options : title, count, hours, unique(true), entities[], context{}, stats[]
  */
@@ -20,7 +19,6 @@ const STATE_FR = {
   clear: "RAS", unavailable: "Indispo", unknown: "Inconnu",
 };
 
-// Catégorie d'état -> couleur de pastille
 function stateKind(eid, s) {
   if (s === "triggered") return "alarm";
   if (["charging", "playing", "cleaning", "opening", "closing", "returning"]
@@ -34,7 +32,6 @@ function stateKind(eid, s) {
   return "neutral";
 }
 
-// Icône emoji d'après mots-clés puis domaine
 function iconFor(eid, s) {
   const id = (eid || "").toLowerCase();
   const on = ["on", "home", "open", "detected", "charging", "playing",
@@ -55,14 +52,13 @@ function iconFor(eid, s) {
     binary_sensor: on ? "🟢" : "⚪", person: s === "home" ? "🏠" : "🚶",
     device_tracker: s === "home" ? "🏠" : "🚶", light: on ? "💡" : "🔅",
     switch: on ? "🔛" : "⭕", lock: s === "locked" ? "🔒" : "🔓",
-    cover: s === "open" ? "🪟" : "🪟", climate: "🌡️", vacuum: "🤖",
+    cover: "🪟", climate: "🌡️", vacuum: "🤖",
     alarm_control_panel: on ? "🚨" : "🛡️", media_player: "🎵",
     sensor: "📊", automation: "⚙️", script: "⚙️",
   };
   return byDom[dom] || "•";
 }
 
-// icône d'unité pour les étiquettes
 function unitIcon(u) {
   if (u === "€" || u === "EUR") return "💶";
   if (/kwh|wh/i.test(u)) return "⚡";
@@ -108,74 +104,97 @@ class MatrixHistoryCard extends HTMLElement {
       <style>
         :host { display:block; }
         ha-card {
-          --g:#00e676; --g2:#00c8ff;
-          position:relative; overflow:hidden; border-radius:16px;
-          background:linear-gradient(180deg,#0b1220 0%,#070b12 100%);
-          border:1px solid rgba(0,230,118,.28);
-          box-shadow:0 8px 30px rgba(0,0,0,.45),
-            inset 0 0 0 1px rgba(255,255,255,.02);
-          color:#e6edf3; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+          --cy:#00eaff; --mg:#ff2bd6; --pu:#b388ff; --yl:#ffe45e;
+          position:relative; overflow:hidden; border-radius:14px;
+          background:
+            radial-gradient(120% 80% at 0% 0%, rgba(255,43,214,.10), transparent 60%),
+            radial-gradient(120% 80% at 100% 100%, rgba(0,234,255,.12), transparent 60%),
+            linear-gradient(160deg,#0b0618 0%,#100a22 55%,#080510 100%);
+          border:1px solid rgba(0,234,255,.35);
+          box-shadow:0 0 22px rgba(255,43,214,.22), 0 0 42px rgba(0,234,255,.15),
+            inset 0 0 34px rgba(162,89,255,.08);
+          color:#e9f6ff;
+          font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
         }
-        .bar { height:3px; background:linear-gradient(90deg,
-          transparent,var(--g),var(--g2),transparent);
-          background-size:200% 100%; animation:slide 6s linear infinite; }
-        @keyframes slide { to { background-position:200% 0; } }
+        ha-card::before { content:""; position:absolute; inset:0; z-index:1;
+          pointer-events:none; opacity:.5;
+          background:repeating-linear-gradient(0deg,
+            rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px,
+            rgba(0,234,255,.035) 3px, rgba(0,0,0,0) 4px); }
+        .bar { position:relative; z-index:2; height:3px;
+          background:linear-gradient(90deg,transparent,var(--cy),var(--mg),
+            var(--yl),transparent); background-size:250% 100%;
+          animation:slide 5s linear infinite;
+          box-shadow:0 0 12px rgba(0,234,255,.6); }
+        @keyframes slide { to { background-position:250% 0; } }
+        .hd,.list,.foot { position:relative; z-index:2; }
         .hd { display:flex; align-items:center; justify-content:space-between;
           padding:14px 16px 10px; gap:12px; }
-        .tt { display:flex; align-items:center; gap:8px; font-weight:700;
-          font-size:16px; letter-spacing:.3px; }
+        .tt { display:flex; align-items:center; gap:9px; font-weight:800;
+          font-size:15px; letter-spacing:2px; text-transform:uppercase;
+          color:var(--cy); text-shadow:0 0 10px rgba(0,234,255,.7); }
         .tt .dot { width:9px; height:9px; border-radius:50%;
-          background:var(--g); box-shadow:0 0 10px var(--g);
-          animation:pulse 1.8s ease-in-out infinite; }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+          background:var(--mg); box-shadow:0 0 12px var(--mg),0 0 4px #fff;
+          animation:pulse 1.6s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
         .clk { font-variant-numeric:tabular-nums; font-size:13px;
-          color:#8b98a5; white-space:nowrap; }
+          font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--mg);
+          text-shadow:0 0 8px rgba(255,43,214,.6); white-space:nowrap; }
         .list { padding:2px 8px 6px; }
         .row { display:grid; grid-template-columns:auto 1fr auto; gap:12px;
-          align-items:center; padding:11px 8px;
-          border-radius:12px; animation:in .35s ease both; }
-        .row:hover { background:rgba(255,255,255,.03); }
-        .row + .row { border-top:1px solid rgba(255,255,255,.05); }
+          align-items:center; padding:11px 8px; border-radius:10px;
+          animation:in .35s ease both; }
+        .row:hover { background:rgba(0,234,255,.05);
+          box-shadow:inset 0 0 0 1px rgba(0,234,255,.2); }
+        .row + .row { border-top:1px solid rgba(179,136,255,.18); }
         @keyframes in { from{opacity:0;transform:translateY(4px)} to{opacity:1} }
-        .ic { width:38px; height:38px; border-radius:10px; display:grid;
-          place-items:center; font-size:20px;
-          background:rgba(0,230,118,.08);
-          border:1px solid rgba(0,230,118,.18); }
+        .ic { width:38px; height:38px; border-radius:9px; display:grid;
+          place-items:center; font-size:20px; background:rgba(0,234,255,.06);
+          border:1px solid rgba(0,234,255,.35);
+          box-shadow:0 0 10px rgba(0,234,255,.2), inset 0 0 8px rgba(0,234,255,.08); }
         .mid { min-width:0; }
         .l1 { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-        .nm { font-weight:650; font-size:14px; color:#f0f4f8; }
-        .pill { font-size:11px; font-weight:700; letter-spacing:.4px;
-          padding:2px 9px; border-radius:999px; text-transform:uppercase;
-          white-space:nowrap; }
-        .k-on{color:#00e676;background:rgba(0,230,118,.14)}
-        .k-off{color:#93a4b3;background:rgba(147,164,179,.12)}
-        .k-busy{color:#00c8ff;background:rgba(0,200,255,.14)}
-        .k-alarm{color:#ff5c5c;background:rgba(255,92,92,.16);
+        .nm { font-weight:650; font-size:14px; color:#eaf6ff;
+          text-shadow:0 0 6px rgba(0,234,255,.15); }
+        .pill { font-size:11px; font-weight:800; letter-spacing:.5px;
+          padding:2px 10px; border-radius:6px; text-transform:uppercase;
+          white-space:nowrap; border:1px solid transparent; }
+        .k-on{color:#00eaff;background:rgba(0,234,255,.10);
+          border-color:rgba(0,234,255,.5);box-shadow:0 0 10px rgba(0,234,255,.35)}
+        .k-busy{color:#c9a9ff;background:rgba(179,136,255,.12);
+          border-color:rgba(179,136,255,.5);box-shadow:0 0 10px rgba(179,136,255,.3)}
+        .k-off{color:#8aa0b6;background:rgba(138,160,182,.10);
+          border-color:rgba(138,160,182,.3)}
+        .k-alarm{color:#ff2bd6;background:rgba(255,43,214,.14);
+          border-color:rgba(255,43,214,.6);box-shadow:0 0 14px rgba(255,43,214,.5);
           animation:blink 1s steps(2) infinite}
-        @keyframes blink{50%{opacity:.45}}
+        @keyframes blink{50%{opacity:.5}}
         .k-dim{color:#6b7785;background:rgba(107,119,133,.1)}
-        .k-neutral{color:#cbd5e1;background:rgba(203,213,225,.1)}
+        .k-neutral{color:var(--yl);background:rgba(255,228,94,.1);
+          border-color:rgba(255,228,94,.35)}
         .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-        .chip { font-size:11.5px; color:#c7f9dc; background:rgba(0,230,118,.07);
-          border:1px solid rgba(0,230,118,.16); padding:2px 8px;
-          border-radius:8px; white-space:nowrap; }
-        .chip b { color:#eafff2; }
+        .chip { font-size:11.5px; color:#bfefff; background:rgba(0,234,255,.06);
+          border:1px solid rgba(0,234,255,.28); padding:2px 8px; border-radius:6px;
+          white-space:nowrap; box-shadow:0 0 8px rgba(0,234,255,.12); }
+        .chip b { color:#eaffff; text-shadow:0 0 6px rgba(0,234,255,.5); }
         .tm { text-align:right; white-space:nowrap; }
-        .tm .rel { font-size:12.5px; font-weight:700; color:#00e676; }
-        .tm .abs { display:block; font-size:10.5px; color:#6b7785; margin-top:2px; }
+        .tm .rel { font-size:12.5px; font-weight:800; color:var(--mg);
+          text-shadow:0 0 8px rgba(255,43,214,.5); }
+        .tm .abs { display:block; font-size:10.5px; color:#7a86a8; margin-top:2px; }
         .empty { padding:26px 12px; color:#8b98a5; font-size:13px;
           text-align:center; }
         .foot { display:grid; gap:8px; padding:10px 14px 15px;
           grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-          border-top:1px solid rgba(255,255,255,.06); margin-top:4px; }
-        .cell { border-radius:12px; padding:9px 11px;
-          background:rgba(255,255,255,.03);
-          border:1px solid rgba(255,255,255,.06); }
-        .cell .cl { font-size:10.5px; color:#8b98a5; text-transform:uppercase;
-          letter-spacing:.5px; white-space:nowrap; overflow:hidden;
+          border-top:1px solid rgba(0,234,255,.18); margin-top:4px; }
+        .cell { border-radius:10px; padding:9px 11px;
+          background:linear-gradient(160deg,rgba(0,234,255,.06),rgba(255,43,214,.05));
+          border:1px solid rgba(0,234,255,.3);
+          box-shadow:inset 0 0 12px rgba(0,234,255,.06); }
+        .cell .cl { font-size:10.5px; color:#8fa6c4; text-transform:uppercase;
+          letter-spacing:.6px; white-space:nowrap; overflow:hidden;
           text-overflow:ellipsis; }
         .cell .cv { font-size:17px; font-weight:800; margin-top:3px;
-          color:#eafff2; }
+          color:#eaffff; text-shadow:0 0 10px rgba(0,234,255,.4); }
         @media (max-width:520px){
           .row{grid-template-columns:auto 1fr; }
           .tm{grid-column:2; text-align:left; margin-top:4px; }
@@ -333,5 +352,5 @@ if (!customElements.get("matrix-history-card"))
 window.customCards = window.customCards || [];
 window.customCards.push({ type: "matrix-history-card",
   name: "Matrix History Card",
-  description: "Journal d'activité lisible (logbook + coûts/énergie)." });
-console.info("%c MATRIX-HISTORY-CARD v3 ", "background:#0b1220;color:#00e676");
+  description: "Journal d'activité néon cyberpunk (logbook + coûts/énergie)." });
+console.info("%c MATRIX-HISTORY-CARD v4 ", "background:#0b0618;color:#00eaff");
