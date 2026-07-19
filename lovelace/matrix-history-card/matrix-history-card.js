@@ -52,6 +52,7 @@ class MatrixHistoryCard extends HTMLElement {
         title: "SYSTEME // JOURNAL",
         count: 12, hours: 96,
         scroll: true, direction: "ltr", speed: 28,
+        unique: false,
         entities: [], context: {}, stats: [],
       },
       config || {}
@@ -206,6 +207,15 @@ class MatrixHistoryCard extends HTMLElement {
       }));
     }
     rows.sort((a, b) => b.when - a.when);
+    if (cfg.unique) {
+      const seen = new Set();
+      rows = rows.filter((r) => {
+        const k = r.eid || r.name;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
+    }
     this._events = rows.slice(0, cfg.count);
     this._render();
   }
