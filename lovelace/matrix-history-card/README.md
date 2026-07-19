@@ -52,8 +52,11 @@ stats:             # bandeau de valeurs "live" en bas de carte
 | Option | Type | Défaut | Description |
 |--------|------|--------|-------------|
 | `title` | string | `SYSTEME // JOURNAL` | Titre affiché en tête |
-| `count` | number | `10` | Nombre d'évènements affichés |
-| `hours` | number | `72` | Fenêtre d'historique en heures |
+| `count` | number | `12` | Nombre d'évènements affichés |
+| `hours` | number | `96` | Fenêtre d'historique en heures |
+| `scroll` | bool | `true` | Fait défiler chaque ligne horizontalement (marquee) si elle dépasse |
+| `direction` | string | `ltr` | Sens du défilement : `ltr` (gauche→droite) ou `rtl` (droite→gauche) |
+| `speed` | number | `28` | Vitesse en pixels/seconde — plus petit = plus lent |
 | `entities` | list | `[]` | Entités suivies dans le logbook |
 | `context` | map | `{}` | `entity_id` → liste `{entity, label, unit}` d'infos ajoutées à la ligne |
 | `stats` | list | `[]` | Cartouches de valeurs live `{entity, label, unit}` |
