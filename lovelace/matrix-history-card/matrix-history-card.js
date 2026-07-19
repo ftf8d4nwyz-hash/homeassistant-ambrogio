@@ -1,60 +1,80 @@
 /*
- * Matrix History Card — journal écrit "style Matrix" pour Home Assistant
- * v2 : chaque ligne DÉFILE horizontalement (marquee) à vitesse lente pour
- * laisser le temps de lire. Pluie de code, lueur verte, effet terminal,
- * enrichissement coût / eau / énergie par appareil + bandeau live.
+ * Matrix History Card — journal d'activité lisible & esthétique pour HA
+ * v3 : plus de défilement. Une ligne par appareil (dernier état), icônes
+ * claires, pastilles d'état colorées, étiquettes coût/énergie/eau, horloge
+ * live + bandeau de valeurs. Fond sombre sobre, accents verts, animations
+ * discrètes.
  *
- * Options principales :
- *   scroll: true|false     -> activer le défilement (défaut true)
- *   direction: "ltr"|"rtl" -> sens du défilement (défaut "ltr" = gauche→droite)
- *   speed: <px/seconde>     -> vitesse (défaut 28 ; plus petit = plus lent)
+ * Options : title, count, hours, unique(true), entities[], context{}, stats[]
  */
 
-const KATA =
-  "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモ0123456789";
-
 const STATE_FR = {
-  on: "MARCHE", off: "ARRET", home: "A LA MAISON", not_home: "ABSENT",
-  open: "OUVERT", opened: "OUVERT", closed: "FERME", closing: "FERMETURE",
-  opening: "OUVERTURE", locked: "VERROUILLE", unlocked: "DEVERROUILLE",
-  docked: "A LA BASE", cleaning: "NETTOYAGE", returning: "RETOUR BASE",
-  charging: "EN CHARGE", paused: "PAUSE", idle: "REPOS", playing: "LECTURE",
-  heat: "CHAUFFAGE", cool: "CLIM", heat_cool: "AUTO", auto: "AUTO",
-  disarmed: "DESARME", armed_away: "ARME ABSENT", armed_home: "ARME PRESENT",
-  armed_night: "ARME NUIT", triggered: "ALARME !", detected: "DETECTE",
-  clear: "RAS", unavailable: "INDISPO", unknown: "INCONNU",
+  on: "Marche", off: "Arrêt", home: "À la maison", not_home: "Absent",
+  open: "Ouvert", opened: "Ouvert", closed: "Fermé", closing: "Fermeture",
+  opening: "Ouverture", locked: "Verrouillé", unlocked: "Déverrouillé",
+  docked: "À la base", cleaning: "Nettoyage", returning: "Retour base",
+  charging: "En charge", paused: "Pause", idle: "Repos", playing: "Lecture",
+  heat: "Chauffage", cool: "Clim", heat_cool: "Auto", auto: "Auto",
+  disarmed: "Désarmé", armed_away: "Armé absent", armed_home: "Armé présent",
+  armed_night: "Armé nuit", triggered: "ALARME", detected: "Détecté",
+  clear: "RAS", unavailable: "Indispo", unknown: "Inconnu",
 };
 
-function glyphFor(entity_id, state) {
-  const d = (entity_id || "").split(".")[0];
-  const on = state === "on" || state === "home" || state === "open" ||
-    state === "playing" || state === "cleaning" || state === "charging" ||
-    state === "detected";
-  const map = {
-    binary_sensor: on ? "◉" : "○",
-    person: state === "home" ? "☗" : "☖",
-    device_tracker: state === "home" ? "☗" : "☖",
-    light: on ? "☀" : "☼",
-    switch: on ? "▮" : "▯",
-    lock: state === "locked" ? "▣" : "▢",
-    cover: state === "open" ? "▤" : "▥",
-    climate: "❋", vacuum: "⌬",
-    alarm_control_panel: state === "triggered" ? "✷" : "⛨",
-    media_player: "♫", automation: "λ", script: "λ", sensor: "≡",
+// Catégorie d'état -> couleur de pastille
+function stateKind(eid, s) {
+  if (s === "triggered") return "alarm";
+  if (["charging", "playing", "cleaning", "opening", "closing", "returning"]
+      .includes(s)) return "busy";
+  if (["on", "home", "open", "detected", "heat", "cool", "heat_cool",
+       "armed_away", "armed_home", "armed_night", "unlocked"].includes(s))
+    return "on";
+  if (["off", "not_home", "closed", "docked", "idle", "disarmed", "locked",
+       "paused", "clear"].includes(s)) return "off";
+  if (["unavailable", "unknown"].includes(s)) return "dim";
+  return "neutral";
+}
+
+// Icône emoji d'après mots-clés puis domaine
+function iconFor(eid, s) {
+  const id = (eid || "").toLowerCase();
+  const on = ["on", "home", "open", "detected", "charging", "playing",
+    "cleaning"].includes(s);
+  const kw = [
+    ["lave_linge", "🧺"], ["machine_a_laver", "🧺"],
+    ["seche_linge", "♨️"], ["seche-linge", "♨️"],
+    ["voiture", "🚗"], ["charge", "🔌"], ["deshumidificateur", "💨"],
+    ["roborock", "🤖"], ["vacuum", "🤖"], ["aspirateur", "🤖"],
+    ["porte", "🚪"], ["presence", "👁️"], ["mouvement", "👁️"],
+    ["ding", "🔔"], ["sonnette", "🔔"], ["alarm", on ? "🚨" : "🛡️"],
+    ["volet", "🪟"], ["thermostat", "🌡️"], ["piscine", "🏊"],
+    ["lumiere", on ? "💡" : "🔅"], ["light", on ? "💡" : "🔅"],
+  ];
+  for (const [k, ic] of kw) if (id.includes(k)) return ic;
+  const dom = id.split(".")[0];
+  const byDom = {
+    binary_sensor: on ? "🟢" : "⚪", person: s === "home" ? "🏠" : "🚶",
+    device_tracker: s === "home" ? "🏠" : "🚶", light: on ? "💡" : "🔅",
+    switch: on ? "🔛" : "⭕", lock: s === "locked" ? "🔒" : "🔓",
+    cover: s === "open" ? "🪟" : "🪟", climate: "🌡️", vacuum: "🤖",
+    alarm_control_panel: on ? "🚨" : "🛡️", media_player: "🎵",
+    sensor: "📊", automation: "⚙️", script: "⚙️",
   };
-  return map[d] || "»";
+  return byDom[dom] || "•";
+}
+
+// icône d'unité pour les étiquettes
+function unitIcon(u) {
+  if (u === "€" || u === "EUR") return "💶";
+  if (/kwh|wh/i.test(u)) return "⚡";
+  if (/^l$|litre|m³|m3/i.test(u)) return "💧";
+  return "";
 }
 
 class MatrixHistoryCard extends HTMLElement {
   setConfig(config) {
     this._config = Object.assign(
-      {
-        title: "SYSTEME // JOURNAL",
-        count: 12, hours: 96,
-        scroll: true, direction: "ltr", speed: 28,
-        unique: false,
-        entities: [], context: {}, stats: [],
-      },
+      { title: "Journal d'activité", count: 10, hours: 96, unique: true,
+        entities: [], context: {}, stats: [] },
       config || {}
     );
     this._events = null;
@@ -70,25 +90,17 @@ class MatrixHistoryCard extends HTMLElement {
       this._fetchEvents();
     }
     this._updateStats();
+    this._paintTimes();
   }
 
-  getCardSize() { return 10; }
+  getCardSize() { return 8; }
 
   connectedCallback() {
     if (!this._root) this._build();
-    this._startRain();
-    this._clock = setInterval(() => this._tickClock(), 1000);
-    this._mo = new ResizeObserver(() => this._setupMarquee());
-    this._mo.observe(this);
+    this._clock = setInterval(() => { this._tickClock(); this._paintTimes(); },
+      1000);
   }
-
-  disconnectedCallback() {
-    this._stopRain();
-    if (this._clock) clearInterval(this._clock);
-    if (this._mo) { this._mo.disconnect(); this._mo = null; }
-    (this._anims || []).forEach((a) => { try { a.cancel(); } catch (e) {} });
-    this._anims = [];
-  }
+  disconnectedCallback() { if (this._clock) clearInterval(this._clock); }
 
   _build() {
     this._root = this.attachShadow({ mode: "open" });
@@ -96,86 +108,97 @@ class MatrixHistoryCard extends HTMLElement {
       <style>
         :host { display:block; }
         ha-card {
-          position:relative; overflow:hidden; border:1px solid #00ff41;
-          background:#000; box-shadow:0 0 18px rgba(0,255,65,.35),
-            inset 0 0 40px rgba(0,255,65,.06);
-          font-family:"Courier New",monospace; color:#00ff41;
+          --g:#00e676; --g2:#00c8ff;
+          position:relative; overflow:hidden; border-radius:16px;
+          background:linear-gradient(180deg,#0b1220 0%,#070b12 100%);
+          border:1px solid rgba(0,230,118,.28);
+          box-shadow:0 8px 30px rgba(0,0,0,.45),
+            inset 0 0 0 1px rgba(255,255,255,.02);
+          color:#e6edf3; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
         }
-        canvas.rain { position:absolute; inset:0; width:100%; height:100%;
-          opacity:.30; pointer-events:none; }
-        .scan { position:absolute; inset:0; pointer-events:none; z-index:2;
-          background:repeating-linear-gradient(0deg,
-            rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
-            rgba(0,255,65,.05) 3px, rgba(0,0,0,0) 4px);
-          animation:flick 3.5s infinite; }
-        @keyframes flick { 0%,97%{opacity:1} 98%{opacity:.7} 100%{opacity:1} }
-        .wrap { position:relative; z-index:3; padding:14px 16px 16px; }
+        .bar { height:3px; background:linear-gradient(90deg,
+          transparent,var(--g),var(--g2),transparent);
+          background-size:200% 100%; animation:slide 6s linear infinite; }
+        @keyframes slide { to { background-position:200% 0; } }
         .hd { display:flex; align-items:center; justify-content:space-between;
-          border-bottom:1px dashed rgba(0,255,65,.5); padding-bottom:8px;
-          margin-bottom:10px; gap:10px; }
-        .ttl { font-weight:bold; letter-spacing:2px; text-transform:uppercase;
-          text-shadow:0 0 8px #00ff41; font-size:15px; }
-        .ttl .cur { animation:blink 1s steps(2) infinite; }
-        @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
-        .clk { font-size:12px; opacity:.85; white-space:nowrap; }
-        .log { list-style:none; margin:0; padding:0;
-          max-height:520px; overflow-y:auto; overflow-x:hidden; }
-        .log::-webkit-scrollbar{width:6px}
-        .log::-webkit-scrollbar-thumb{background:#00ff41;border-radius:3px}
-        .row { display:grid; grid-template-columns:auto 1fr; gap:10px;
-          align-items:center; padding:6px 0;
-          border-bottom:1px solid rgba(0,255,65,.12);
-          animation:fade .5s ease both; }
-        @keyframes fade { from{opacity:0} to{opacity:1} }
-        .gly { font-size:16px; text-shadow:0 0 8px #00ff41; width:1em;
+          padding:14px 16px 10px; gap:12px; }
+        .tt { display:flex; align-items:center; gap:8px; font-weight:700;
+          font-size:16px; letter-spacing:.3px; }
+        .tt .dot { width:9px; height:9px; border-radius:50%;
+          background:var(--g); box-shadow:0 0 10px var(--g);
+          animation:pulse 1.8s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+        .clk { font-variant-numeric:tabular-nums; font-size:13px;
+          color:#8b98a5; white-space:nowrap; }
+        .list { padding:2px 8px 6px; }
+        .row { display:grid; grid-template-columns:auto 1fr auto; gap:12px;
+          align-items:center; padding:11px 8px;
+          border-radius:12px; animation:in .35s ease both; }
+        .row:hover { background:rgba(255,255,255,.03); }
+        .row + .row { border-top:1px solid rgba(255,255,255,.05); }
+        @keyframes in { from{opacity:0;transform:translateY(4px)} to{opacity:1} }
+        .ic { width:38px; height:38px; border-radius:10px; display:grid;
+          place-items:center; font-size:20px;
+          background:rgba(0,230,118,.08);
+          border:1px solid rgba(0,230,118,.18); }
+        .mid { min-width:0; }
+        .l1 { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+        .nm { font-weight:650; font-size:14px; color:#f0f4f8; }
+        .pill { font-size:11px; font-weight:700; letter-spacing:.4px;
+          padding:2px 9px; border-radius:999px; text-transform:uppercase;
+          white-space:nowrap; }
+        .k-on{color:#00e676;background:rgba(0,230,118,.14)}
+        .k-off{color:#93a4b3;background:rgba(147,164,179,.12)}
+        .k-busy{color:#00c8ff;background:rgba(0,200,255,.14)}
+        .k-alarm{color:#ff5c5c;background:rgba(255,92,92,.16);
+          animation:blink 1s steps(2) infinite}
+        @keyframes blink{50%{opacity:.45}}
+        .k-dim{color:#6b7785;background:rgba(107,119,133,.1)}
+        .k-neutral{color:#cbd5e1;background:rgba(203,213,225,.1)}
+        .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+        .chip { font-size:11.5px; color:#c7f9dc; background:rgba(0,230,118,.07);
+          border:1px solid rgba(0,230,118,.16); padding:2px 8px;
+          border-radius:8px; white-space:nowrap; }
+        .chip b { color:#eafff2; }
+        .tm { text-align:right; white-space:nowrap; }
+        .tm .rel { font-size:12.5px; font-weight:700; color:#00e676; }
+        .tm .abs { display:block; font-size:10.5px; color:#6b7785; margin-top:2px; }
+        .empty { padding:26px 12px; color:#8b98a5; font-size:13px;
           text-align:center; }
-        .mar { position:relative; overflow:hidden; }
-        .move { display:inline-block; white-space:nowrap; will-change:transform;
-          font-size:13px; }
-        .nm { color:#9dffb0; text-shadow:0 0 4px rgba(0,255,65,.6);
-          font-weight:bold; }
-        .st { color:#00ff41; text-transform:uppercase; letter-spacing:1px; }
-        .ctx { color:#5cff8a; }
-        .ctx b { color:#eaffef; }
-        .tm { color:#00ff41; opacity:.8; }
-        .sep { opacity:.5; padding:0 8px; }
-        .foot { margin-top:12px; padding-top:10px;
-          border-top:1px dashed rgba(0,255,65,.5);
-          display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-          gap:8px; }
-        .cell { border:1px solid rgba(0,255,65,.35); padding:6px 8px;
-          background:rgba(0,255,65,.05); }
-        .cell .cl { font-size:10px; opacity:.75; text-transform:uppercase;
-          letter-spacing:1px; white-space:nowrap; overflow:hidden;
+        .foot { display:grid; gap:8px; padding:10px 14px 15px;
+          grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+          border-top:1px solid rgba(255,255,255,.06); margin-top:4px; }
+        .cell { border-radius:12px; padding:9px 11px;
+          background:rgba(255,255,255,.03);
+          border:1px solid rgba(255,255,255,.06); }
+        .cell .cl { font-size:10.5px; color:#8b98a5; text-transform:uppercase;
+          letter-spacing:.5px; white-space:nowrap; overflow:hidden;
           text-overflow:ellipsis; }
-        .cell .cv { font-size:16px; font-weight:bold; text-shadow:0 0 8px #00ff41; }
-        .empty { padding:24px 4px; opacity:.7; font-size:13px; }
+        .cell .cv { font-size:17px; font-weight:800; margin-top:3px;
+          color:#eafff2; }
+        @media (max-width:520px){
+          .row{grid-template-columns:auto 1fr; }
+          .tm{grid-column:2; text-align:left; margin-top:4px; }
+        }
       </style>
       <ha-card>
-        <canvas class="rain"></canvas>
-        <div class="scan"></div>
-        <div class="wrap">
-          <div class="hd">
-            <span class="ttl"></span>
-            <span class="clk"></span>
-          </div>
-          <ul class="log"></ul>
-          <div class="foot"></div>
-        </div>
+        <div class="bar"></div>
+        <div class="hd"><div class="tt"><span class="dot"></span>
+          <span class="ttx"></span></div><div class="clk"></div></div>
+        <div class="list"></div>
+        <div class="foot"></div>
       </ha-card>`;
-    this._canvas = this._root.querySelector("canvas.rain");
-    this._logEl = this._root.querySelector(".log");
+    this._listEl = this._root.querySelector(".list");
     this._footEl = this._root.querySelector(".foot");
     this._render();
-    if (this.isConnected) {
-      this._startRain();
-      if (!this._clock) this._clock = setInterval(() => this._tickClock(), 1000);
-    }
+    if (!this._clock)
+      this._clock = setInterval(() => { this._tickClock(); this._paintTimes(); },
+        1000);
   }
 
   _tickClock() {
     const c = this._root && this._root.querySelector(".clk");
-    if (c) c.textContent = "> " + new Date().toLocaleTimeString("fr-FR") + " _";
+    if (c) c.textContent = new Date().toLocaleTimeString("fr-FR");
   }
 
   async _fetchEvents() {
@@ -184,36 +207,27 @@ class MatrixHistoryCard extends HTMLElement {
     const start = new Date(Date.now() - cfg.hours * 3600000).toISOString();
     let ev = null;
     try {
-      ev = await hass.callWS({
-        type: "logbook/get_events",
-        start_time: start,
-        entity_ids: cfg.entities.length ? cfg.entities : undefined,
-      });
+      ev = await hass.callWS({ type: "logbook/get_events", start_time: start,
+        entity_ids: cfg.entities.length ? cfg.entities : undefined });
     } catch (e) { ev = null; }
     let rows;
     if (Array.isArray(ev) && ev.length) {
       rows = ev.filter((x) => x.entity_id || x.name).map((x) => ({
-        when: (x.when || 0) * 1000,
-        eid: x.entity_id || "",
+        when: (x.when || 0) * 1000, eid: x.entity_id || "",
         name: x.name || (x.entity_id || "").split(".")[1],
-        state: x.state, message: x.message,
-      }));
+        state: x.state, message: x.message }));
     } else {
-      rows = cfg.entities.map((eid) => hass.states[eid]).filter(Boolean).map((s) => ({
-        when: new Date(s.last_changed).getTime(),
-        eid: s.entity_id,
+      rows = cfg.entities.map((e) => hass.states[e]).filter(Boolean).map((s) => ({
+        when: new Date(s.last_changed).getTime(), eid: s.entity_id,
         name: (s.attributes && s.attributes.friendly_name) || s.entity_id,
-        state: s.state,
-      }));
+        state: s.state }));
     }
     rows.sort((a, b) => b.when - a.when);
-    if (cfg.unique) {
+    if (cfg.unique !== false) {
       const seen = new Set();
       rows = rows.filter((r) => {
         const k = r.eid || r.name;
-        if (seen.has(k)) return false;
-        seen.add(k);
-        return true;
+        if (seen.has(k)) return false; seen.add(k); return true;
       });
     }
     this._events = rows.slice(0, cfg.count);
@@ -222,96 +236,74 @@ class MatrixHistoryCard extends HTMLElement {
 
   _relTime(ms) {
     const s = Math.max(0, Math.floor((Date.now() - ms) / 1000));
-    if (s < 60) return "il y a " + s + "s";
+    if (s < 60) return "à l'instant";
     const m = Math.floor(s / 60);
-    if (m < 60) return "il y a " + m + "min";
+    if (m < 60) return "il y a " + m + " min";
     const h = Math.floor(m / 60);
-    if (h < 24) return "il y a " + h + "h";
-    return "il y a " + Math.floor(h / 24) + "j";
+    if (h < 24) return "il y a " + h + " h";
+    return "il y a " + Math.floor(h / 24) + " j";
   }
 
   _stateLabel(r) {
     if (r.state != null && r.state !== "")
-      return STATE_FR[r.state] || String(r.state).toUpperCase();
-    if (r.message) return String(r.message).toUpperCase();
+      return STATE_FR[r.state] || String(r.state);
+    if (r.message) return String(r.message);
     return "";
   }
 
-  _ctxFor(eid) {
+  _chips(eid) {
     const hass = this._hass;
     const list = (this._config.context || {})[eid];
     if (!list || !hass) return "";
-    const parts = [];
+    const out = [];
     for (const c of list) {
       const s = hass.states[c.entity];
       if (!s || s.state === "unknown" || s.state === "unavailable") continue;
-      let unit = c.unit || (s.attributes && s.attributes.unit_of_measurement) || "";
-      if (unit === "EUR") unit = "€";
-      parts.push((c.label ? c.label + " " : "") + "<b>" + s.state + " " + unit + "</b>");
+      let u = c.unit || (s.attributes && s.attributes.unit_of_measurement) || "";
+      if (u === "EUR") u = "€";
+      const ic = unitIcon(u);
+      out.push('<span class="chip">' + (ic ? ic + " " : "") +
+        (c.label ? this._esc(c.label) + " " : "") +
+        "<b>" + this._esc(s.state) + (u ? " " + this._esc(u) : "") + "</b></span>");
     }
-    return parts.join(" · ");
+    return out.length ? '<div class="chips">' + out.join("") + "</div>" : "";
   }
 
   _render() {
     if (!this._root) return;
-    const cfg = this._config;
-    const ttl = this._root.querySelector(".ttl");
-    if (ttl) ttl.innerHTML = cfg.title + ' <span class="cur">█</span>';
+    const tt = this._root.querySelector(".ttx");
+    if (tt) tt.textContent = this._config.title;
     this._tickClock();
-
-    if (this._logEl) {
-      if (!this._events) {
-        this._logEl.innerHTML = '<li class="empty">> chargement du flux…</li>';
-      } else if (!this._events.length) {
-        this._logEl.innerHTML = '<li class="empty">> aucun évènement récent</li>';
-      } else {
-        this._logEl.innerHTML = this._events.map((r) => {
-          const gly = glyphFor(r.eid, r.state);
-          const ctx = this._ctxFor(r.eid);
-          const d = new Date(r.when);
-          const abs = d.toLocaleString("fr-FR", {
+    if (this._listEl) {
+      if (!this._events)
+        this._listEl.innerHTML = '<div class="empty">Chargement…</div>';
+      else if (!this._events.length)
+        this._listEl.innerHTML =
+          '<div class="empty">Aucun évènement récent</div>';
+      else
+        this._listEl.innerHTML = this._events.map((r, i) => {
+          const kind = stateKind(r.eid, r.state);
+          const abs = new Date(r.when).toLocaleString("fr-FR", {
             weekday: "short", day: "2-digit", month: "2-digit",
-            hour: "2-digit", minute: "2-digit", second: "2-digit",
-          });
-          const line =
-            '<span class="nm">' + this._esc(r.name) + '</span>' +
-            '<span class="sep">::</span>' +
-            '<span class="st">' + this._esc(this._stateLabel(r)) + '</span>' +
-            (ctx ? '<span class="sep">//</span><span class="ctx">' + ctx + '</span>' : '') +
-            '<span class="sep">·</span>' +
-            '<span class="tm">🕒 ' + this._relTime(r.when) + ' · ' + this._esc(abs) + '</span>';
-          return '<li class="row"><span class="gly">' + gly +
-            '</span><span class="mar"><span class="move">' + line +
-            '</span></span></li>';
+            hour: "2-digit", minute: "2-digit" });
+          return '<div class="row" style="animation-delay:' + (i * 30) +
+            'ms"><div class="ic">' + iconFor(r.eid, r.state) +
+            '</div><div class="mid"><div class="l1"><span class="nm">' +
+            this._esc(r.name) + '</span><span class="pill k-' + kind + '">' +
+            this._esc(this._stateLabel(r)) + "</span></div>" +
+            this._chips(r.eid) + '</div><div class="tm"><span class="rel" ' +
+            'data-t="' + r.when + '">' + this._relTime(r.when) +
+            '</span><span class="abs">' + abs + "</span></div></div>";
         }).join("");
-      }
     }
     this._updateStats();
-    // (re)lance le défilement une fois la mise en page effectuée
-    requestAnimationFrame(() => requestAnimationFrame(() => this._setupMarquee()));
   }
 
-  _setupMarquee() {
-    if (!this._logEl) return;
-    (this._anims || []).forEach((a) => { try { a.cancel(); } catch (e) {} });
-    this._anims = [];
-    const cfg = this._config;
-    if (cfg.scroll === false) return;
-    const speed = Math.max(6, Number(cfg.speed) || 28); // px/s
-    const rtl = cfg.direction === "rtl";
-    this._logEl.querySelectorAll(".move").forEach((m) => {
-      const cont = m.parentElement;
-      const w = m.scrollWidth, cw = cont.clientWidth;
-      if (!cw || w <= cw + 4) { m.style.transform = "none"; return; }
-      const dur = ((w + cw) / speed) * 1000;
-      const from = rtl ? cw : -w;
-      const to = rtl ? -w : cw;
-      const a = m.animate(
-        [{ transform: `translateX(${from}px)` },
-         { transform: `translateX(${to}px)` }],
-        { duration: dur, iterations: Infinity, easing: "linear" }
-      );
-      this._anims.push(a);
+  _paintTimes() {
+    if (!this._listEl) return;
+    this._listEl.querySelectorAll(".rel").forEach((el) => {
+      const t = Number(el.getAttribute("data-t"));
+      if (t) el.textContent = this._relTime(t);
     });
   }
 
@@ -320,12 +312,13 @@ class MatrixHistoryCard extends HTMLElement {
     this._footEl.innerHTML = (this._config.stats || []).map((c) => {
       const s = this._hass.states[c.entity];
       let v = s ? s.state : "—";
-      let unit = c.unit || (s && s.attributes && s.attributes.unit_of_measurement) || "";
-      if (unit === "EUR") unit = "€";
-      const label = c.label || (s && s.attributes && s.attributes.friendly_name) || c.entity;
+      let u = c.unit || (s && s.attributes && s.attributes.unit_of_measurement) || "";
+      if (u === "EUR") u = "€";
+      const label = c.label || (s && s.attributes && s.attributes.friendly_name)
+        || c.entity;
       return '<div class="cell"><div class="cl">' + this._esc(label) +
         '</div><div class="cv">' + this._esc(v) +
-        (unit ? " " + this._esc(unit) : "") + "</div></div>";
+        (u ? " " + this._esc(u) : "") + "</div></div>";
     }).join("");
   }
 
@@ -333,54 +326,12 @@ class MatrixHistoryCard extends HTMLElement {
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
-
-  _startRain() {
-    if (!this._canvas || this._raf) return;
-    const cv = this._canvas, ctx = cv.getContext("2d");
-    let cols, drops, fs;
-    const resize = () => {
-      const r = cv.getBoundingClientRect();
-      cv.width = Math.max(1, r.width); cv.height = Math.max(1, r.height);
-      fs = 14; cols = Math.ceil(cv.width / fs);
-      drops = new Array(cols).fill(0).map(() => Math.random() * -50);
-    };
-    resize();
-    this._ro = new ResizeObserver(resize); this._ro.observe(cv);
-    let last = 0;
-    const step = (t) => {
-      this._raf = requestAnimationFrame(step);
-      if (t - last < 55) return;
-      last = t;
-      ctx.fillStyle = "rgba(0,0,0,0.09)";
-      ctx.fillRect(0, 0, cv.width, cv.height);
-      ctx.font = fs + "px monospace";
-      for (let i = 0; i < cols; i++) {
-        const ch = KATA[Math.floor(Math.random() * KATA.length)];
-        const x = i * fs, y = drops[i] * fs;
-        ctx.fillStyle = "#aaffcc"; ctx.fillText(ch, x, y);
-        ctx.fillStyle = "#00ff41"; ctx.fillText(ch, x, y - fs);
-        if (y > cv.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i] += 1;
-      }
-    };
-    this._raf = requestAnimationFrame(step);
-  }
-
-  _stopRain() {
-    if (this._raf) cancelAnimationFrame(this._raf);
-    this._raf = null;
-    if (this._ro) this._ro.disconnect();
-    this._ro = null;
-  }
 }
 
-if (!customElements.get("matrix-history-card")) {
+if (!customElements.get("matrix-history-card"))
   customElements.define("matrix-history-card", MatrixHistoryCard);
-}
 window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "matrix-history-card",
+window.customCards.push({ type: "matrix-history-card",
   name: "Matrix History Card",
-  description: "Journal écrit défilant style Matrix (logbook + coûts/énergie).",
-});
-console.info("%c MATRIX-HISTORY-CARD v2 ", "background:#000;color:#00ff41");
+  description: "Journal d'activité lisible (logbook + coûts/énergie)." });
+console.info("%c MATRIX-HISTORY-CARD v3 ", "background:#0b1220;color:#00e676");
