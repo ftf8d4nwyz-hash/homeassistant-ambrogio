@@ -88,8 +88,7 @@ home-assistant-config/
 ├── scripts/             ← scripts
 ├── scenes/              ← scènes
 ├── packages/            ← packages HA (regroupe helpers+auto+scripts par thème)
-├── dashboards/          ← dashboards Lovelace (YAML)
-└── blueprints/          ← blueprints réutilisables
+└── dashboards/          ← dashboards Lovelace (YAML)
 ```
 
 > Ce dossier est une **mémoire versionnée** : y déposer les exports YAML de HA
