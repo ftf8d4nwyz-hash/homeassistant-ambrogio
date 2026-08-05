@@ -1,0 +1,787 @@
+{
+  "type": "panel",
+  "icon": "mdi:lightning-bolt",
+  "cards": [
+    {
+      "type": "vertical-stack",
+      "cards": [
+        {
+          "type": "custom:stack-in-card",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» TARIF & RÉVISION _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #ffd700 !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "entity_id": [
+                "input_number.prix_du_kwh_alpiq"
+              ],
+              "card_mod": {
+                "style": "ha-card { border: 1px solid rgba(255,215,0,0.35) !important; }"
+              },
+              "content": "{% set n = now() %}\n{% set y = n.year %}\n{% set feb = as_local(as_datetime(y ~ '-02-01')) %}\n{% set aug = as_local(as_datetime(y ~ '-08-01')) %}\n{% if n < feb %}{% set nxt = feb %}{% set prev = as_local(as_datetime((y-1) ~ '-08-01')) %}\n{% elif n < aug %}{% set nxt = aug %}{% set prev = feb %}\n{% else %}{% set nxt = as_local(as_datetime((y+1) ~ '-02-01')) %}{% set prev = aug %}\n{% endif %}\n{% set j = (nxt - n).days %}\n{% set p = states('input_number.prix_du_kwh_alpiq') | float(0) %}\n{% set conso = 19100 %}\n{% if j <= 15 %}🔴 **RÉVISION IMMINENTE**{% elif j <= 45 %}🟠 **RÉVISION PROCHE**{% else %}🟢 **TARIF STABLE**{% endif %} — J-{{ j }}\n\n**Prix kWh** {{ '%.4f'|format(p) | replace('.', ',') }} € · **Abo** 23,76 €/mois\nOffre Alpiq Référence — *indexée sur le TRV*\n\nDernière révision : **{{ prev.strftime('%d/%m/%Y') }}**\nProchaine : **{{ nxt.strftime('%d/%m/%Y') }}**\n\nImpact d'une hausse de 1 % : ~{{ (conso * p * 0.01) | round(0) | int }} €/an"
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(0,5,10,0.9); border: 2px solid #00f3ff !important; box-shadow: 0 0 20px #00f3ff !important; border-radius: 24px !important; padding: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» PUISSANCE EN TEMPS RÉEL _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #00f3ff !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Puissance consommée par toute la maison à l'instant présent. La jauge indique le niveau&nbsp;: 🟢 &lt; 3 kW &nbsp;·&nbsp; 🟠 3–6 kW &nbsp;·&nbsp; 🔴 &gt; 6 kW.",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #00f3ff !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "square": false,
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+                  "name": "PUISSANCE",
+                  "card_mod": {
+                    "style": {
+                      "ha-tile-info$": ".primary { color: white !important; font-size: 15px !important; font-weight: 900 !important; margin-left: -10px !important; } .secondary { color: #00f3ff !important; font-size: 24px !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; margin-left: -10px !important; opacity: 1 !important; }",
+                      ".": "ha-card { background: rgba(0,0,0,0.6) !important; border: 1px solid #00f3ff !important; height: 110px !important; }"
+                    }
+                  }
+                },
+                {
+                  "type": "gauge",
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+                  "min": 0,
+                  "max": 9000,
+                  "needle": true,
+                  "severity": {
+                    "green": 0,
+                    "yellow": 3000,
+                    "red": 6000
+                  },
+                  "card_mod": {
+                    "style": "ha-card { background: transparent !important; border: none !important; height: 110px !important; }"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(5,0,15,0.9); border: 2px solid #b400ff !important; box-shadow: 0 0 20px #b400ff !important; border-radius: 24px !important; padding: 15px; margin-top: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» COURBE DU JOUR (24h) _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #b400ff !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Évolution de la puissance de la maison sur les dernières 24&nbsp;heures. Chaque point = moyenne sur 10&nbsp;min &nbsp;·&nbsp; valeurs en Watts (W).",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #b400ff !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "graph_span": "24h",
+              "header": {
+                "show": true,
+                "show_states": true,
+                "colorize_states": true,
+                "title": "Puissance maison"
+              },
+              "card_mod": {
+                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
+              },
+              "apex_config": {
+                "chart": {
+                  "height": 240,
+                  "fontFamily": "Courier New, monospace",
+                  "toolbar": {
+                    "show": false
+                  }
+                },
+                "grid": {
+                  "borderColor": "rgba(255,255,255,0.08)",
+                  "strokeDashArray": 4,
+                  "padding": {
+                    "top": 0,
+                    "right": 6,
+                    "left": 2
+                  }
+                },
+                "stroke": {
+                  "curve": "smooth",
+                  "width": 2
+                },
+                "fill": {
+                  "type": "gradient",
+                  "gradient": {
+                    "shadeIntensity": 1,
+                    "opacityFrom": 0.55,
+                    "opacityTo": 0.03,
+                    "stops": [
+                      0,
+                      95
+                    ]
+                  }
+                },
+                "xaxis": {
+                  "axisBorder": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "labels": {
+                    "style": {
+                      "colors": "#b400ff",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    },
+                    "datetimeUTC": false
+                  }
+                },
+                "yaxis": {
+                  "labels": {
+                    "style": {
+                      "colors": "#b400ff",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    }
+                  },
+                  "forceNiceScale": true
+                },
+                "tooltip": {
+                  "theme": "dark"
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+                  "name": "Puissance maison",
+                  "type": "area",
+                  "color": "#b400ff",
+                  "stroke_width": 2,
+                  "group_by": {
+                    "func": "avg",
+                    "duration": "10min"
+                  },
+                  "unit": " W",
+                  "show": {
+                    "datalabels": false,
+                    "legend_value": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(10,0,0,0.9); border: 2px solid #ff0055 !important; box-shadow: 0 0 20px #ff0055 !important; border-radius: 24px !important; padding: 15px; margin-top: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» INDEX COMPTEUR _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #ff0055 !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Total cumulé d'énergie mesuré par le compteur depuis sa mise en service (compteur qui ne redescend jamais).",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #ff0055 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "## ⚡ {{ '{:,}'.format((states('sensor.capteur_de_consommation_electrique_electric_energy_consumption')|float(0)/1000)|round(0)|int)|replace(',', ' ') }} kWh\n\n###### TOTAL CUMULÉ DEPUIS L'INSTALLATION",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { border: 1px solid #ff0055 !important; background: rgba(0,0,0,0.7) !important; border-radius: 12px !important; text-align: center; padding: 6px 0 !important; }",
+                  "ha-markdown$": "h2 { color: #ff0055 !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 12px #ff0055 !important; margin: 4px 0 !important; } h6 { color: white !important; font-family: 'Courier New', monospace !important; letter-spacing: 1px !important; opacity: 0.85 !important; margin: 0 0 4px 0 !important; font-weight: 700 !important; }"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(10,10,0,0.9); border: 2px solid #ffd700 !important; box-shadow: 0 0 20px #ffd700 !important; border-radius: 24px !important; padding: 15px; margin-top: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» COÛT EN EUROS _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #ffd700 !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Coût de l'électricité. Le total ci-dessous, puis le détail jour par jour&nbsp;: 1 barre = 1 jour &nbsp;·&nbsp; valeurs en euros (€).",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #ffd700 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "tile",
+              "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
+              "name": "COÛT DU JOUR",
+              "card_mod": {
+                "style": {
+                  "ha-tile-info$": ".primary { color: white !important; font-size: 15px !important; font-weight: 900 !important; margin-left: -10px !important; } .secondary { color: #ffd700 !important; font-size: 24px !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; margin-left: -10px !important; opacity: 1 !important; }",
+                  ".": "ha-card { border: 1px solid #ffd700 !important; background: rgba(0,0,0,0.7) !important; }"
+                }
+              },
+              "icon": "mdi:currency-eur"
+            },
+            {
+              "type": "markdown",
+              "content": "💶 &nbsp;Coût quotidien — 7 derniers jours",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #ffd700 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "graph_span": "7d",
+              "span": {
+                "end": "day"
+              },
+              "header": {
+                "show": false
+              },
+              "card_mod": {
+                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
+              },
+              "apex_config": {
+                "chart": {
+                  "height": 250,
+                  "fontFamily": "Courier New, monospace",
+                  "toolbar": {
+                    "show": false
+                  },
+                  "animations": {
+                    "enabled": true,
+                    "speed": 500
+                  }
+                },
+                "grid": {
+                  "borderColor": "rgba(255,255,255,0.08)",
+                  "strokeDashArray": 4,
+                  "padding": {
+                    "top": 14,
+                    "right": 6,
+                    "left": 2
+                  }
+                },
+                "plotOptions": {
+                  "bar": {
+                    "borderRadius": 5,
+                    "columnWidth": "62%",
+                    "dataLabels": {
+                      "position": "top"
+                    }
+                  }
+                },
+                "dataLabels": {
+                  "enabled": true,
+                  "offsetY": -18,
+                  "style": {
+                    "fontSize": "11px",
+                    "fontWeight": 900,
+                    "fontFamily": "Courier New, monospace",
+                    "colors": [
+                      "#ffd700"
+                    ]
+                  },
+                  "background": {
+                    "enabled": false
+                  }
+                },
+                "xaxis": {
+                  "axisBorder": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "axisTicks": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "labels": {
+                    "style": {
+                      "colors": "#ffd700",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    },
+                    "datetimeUTC": false
+                  }
+                },
+                "yaxis": {
+                  "labels": {
+                    "style": {
+                      "colors": "#ffd700",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    }
+                  },
+                  "forceNiceScale": true
+                },
+                "tooltip": {
+                  "theme": "dark"
+                },
+                "legend": {
+                  "show": false
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
+                  "type": "column",
+                  "color": "#ffd700",
+                  "statistics": {
+                    "type": "change",
+                    "period": "day",
+                    "align": "end"
+                  },
+                  "unit": " €",
+                  "show": {
+                    "datalabels": true,
+                    "legend_value": false
+                  },
+                  "float_precision": 1
+                }
+              ]
+            },
+            {
+              "type": "markdown",
+              "content": "💶 &nbsp;Coût quotidien — 30 derniers jours",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #ffd700 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "graph_span": "30d",
+              "span": {
+                "end": "day"
+              },
+              "header": {
+                "show": false
+              },
+              "card_mod": {
+                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
+              },
+              "apex_config": {
+                "chart": {
+                  "height": 230,
+                  "fontFamily": "Courier New, monospace",
+                  "toolbar": {
+                    "show": false
+                  },
+                  "animations": {
+                    "enabled": true,
+                    "speed": 500
+                  }
+                },
+                "grid": {
+                  "borderColor": "rgba(255,255,255,0.08)",
+                  "strokeDashArray": 4,
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "left": 2
+                  }
+                },
+                "plotOptions": {
+                  "bar": {
+                    "borderRadius": 5,
+                    "columnWidth": "62%",
+                    "dataLabels": {
+                      "position": "top"
+                    }
+                  }
+                },
+                "dataLabels": {
+                  "enabled": false,
+                  "offsetY": -18,
+                  "style": {
+                    "fontSize": "11px",
+                    "fontWeight": 900,
+                    "fontFamily": "Courier New, monospace",
+                    "colors": [
+                      "#ffd700"
+                    ]
+                  },
+                  "background": {
+                    "enabled": false
+                  }
+                },
+                "xaxis": {
+                  "axisBorder": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "axisTicks": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "labels": {
+                    "style": {
+                      "colors": "#ffd700",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    },
+                    "datetimeUTC": false
+                  }
+                },
+                "yaxis": {
+                  "labels": {
+                    "style": {
+                      "colors": "#ffd700",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    }
+                  },
+                  "forceNiceScale": true
+                },
+                "tooltip": {
+                  "theme": "dark"
+                },
+                "legend": {
+                  "show": false
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
+                  "type": "column",
+                  "color": "#ffd700",
+                  "statistics": {
+                    "type": "change",
+                    "period": "day",
+                    "align": "end"
+                  },
+                  "unit": " €",
+                  "show": {
+                    "datalabels": false,
+                    "legend_value": false
+                  },
+                  "float_precision": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(10,5,0,0.9); border: 2px solid #ff9900 !important; box-shadow: 0 0 20px #ff9900 !important; border-radius: 24px !important; padding: 15px; margin-top: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» CONSO PAR JOUR (7j) _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #ff9900 !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Énergie électrique totale consommée par la maison chaque jour. 1 barre = 1 journée &nbsp;·&nbsp; valeurs en kilowattheures (kWh). Le chiffre au-dessus de chaque barre = la conso du jour.",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #ff9900 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "graph_span": "7d",
+              "span": {
+                "end": "day"
+              },
+              "header": {
+                "show": false
+              },
+              "card_mod": {
+                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
+              },
+              "apex_config": {
+                "chart": {
+                  "height": 250,
+                  "fontFamily": "Courier New, monospace",
+                  "toolbar": {
+                    "show": false
+                  },
+                  "animations": {
+                    "enabled": true,
+                    "speed": 500
+                  }
+                },
+                "grid": {
+                  "borderColor": "rgba(255,255,255,0.08)",
+                  "strokeDashArray": 4,
+                  "padding": {
+                    "top": 14,
+                    "right": 6,
+                    "left": 2
+                  }
+                },
+                "plotOptions": {
+                  "bar": {
+                    "borderRadius": 5,
+                    "columnWidth": "62%",
+                    "dataLabels": {
+                      "position": "top"
+                    }
+                  }
+                },
+                "dataLabels": {
+                  "enabled": true,
+                  "offsetY": -18,
+                  "style": {
+                    "fontSize": "11px",
+                    "fontWeight": 900,
+                    "fontFamily": "Courier New, monospace",
+                    "colors": [
+                      "#ff9900"
+                    ]
+                  },
+                  "background": {
+                    "enabled": false
+                  }
+                },
+                "xaxis": {
+                  "axisBorder": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "axisTicks": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "labels": {
+                    "style": {
+                      "colors": "#ff9900",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    },
+                    "datetimeUTC": false
+                  }
+                },
+                "yaxis": {
+                  "labels": {
+                    "style": {
+                      "colors": "#ff9900",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    }
+                  },
+                  "forceNiceScale": true
+                },
+                "tooltip": {
+                  "theme": "dark"
+                },
+                "legend": {
+                  "show": false
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption",
+                  "type": "column",
+                  "color": "#ff9900",
+                  "statistics": {
+                    "type": "change",
+                    "period": "day",
+                    "align": "end"
+                  },
+                  "unit": " kWh",
+                  "show": {
+                    "datalabels": true,
+                    "legend_value": false
+                  },
+                  "float_precision": 1,
+                  "transform": "return x / 1000;"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "custom:stack-in-card",
+          "card_mod": {
+            "style": "ha-card { background: rgba(0,10,0,0.9); border: 2px solid #00ff66 !important; box-shadow: 0 0 20px #00ff66 !important; border-radius: 24px !important; padding: 15px; margin-top: 15px; }"
+          },
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "» VUE MENSUELLE (30j) _",
+              "card_mod": {
+                "style": ".title { color: white !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; text-shadow: 0 0 5px #fff, 0 0 10px #00ff66 !important; }"
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "Même consommation quotidienne, mais sur 30 jours pour voir la tendance du mois. 1 barre = 1 journée &nbsp;·&nbsp; valeurs en kWh (survolez une barre pour le détail).",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: -10px 0 2px 0 !important; padding: 0 6px !important; }",
+                  "ha-markdown$": "p { color: #00ff66 !important; font-family: 'Courier New', monospace !important; font-size: 0.78em !important; line-height: 1.35 !important; letter-spacing: 0.4px !important; margin: 0 !important; opacity: 0.92 !important; }"
+                }
+              }
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "graph_span": "30d",
+              "span": {
+                "end": "day"
+              },
+              "header": {
+                "show": false
+              },
+              "card_mod": {
+                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
+              },
+              "apex_config": {
+                "chart": {
+                  "height": 230,
+                  "fontFamily": "Courier New, monospace",
+                  "toolbar": {
+                    "show": false
+                  },
+                  "animations": {
+                    "enabled": true,
+                    "speed": 500
+                  }
+                },
+                "grid": {
+                  "borderColor": "rgba(255,255,255,0.08)",
+                  "strokeDashArray": 4,
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "left": 2
+                  }
+                },
+                "plotOptions": {
+                  "bar": {
+                    "borderRadius": 5,
+                    "columnWidth": "62%",
+                    "dataLabels": {
+                      "position": "top"
+                    }
+                  }
+                },
+                "dataLabels": {
+                  "enabled": false,
+                  "offsetY": -18,
+                  "style": {
+                    "fontSize": "11px",
+                    "fontWeight": 900,
+                    "fontFamily": "Courier New, monospace",
+                    "colors": [
+                      "#00ff66"
+                    ]
+                  },
+                  "background": {
+                    "enabled": false
+                  }
+                },
+                "xaxis": {
+                  "axisBorder": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "axisTicks": {
+                    "color": "rgba(255,255,255,0.08)"
+                  },
+                  "labels": {
+                    "style": {
+                      "colors": "#00ff66",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    },
+                    "datetimeUTC": false
+                  }
+                },
+                "yaxis": {
+                  "labels": {
+                    "style": {
+                      "colors": "#00ff66",
+                      "fontSize": "10px",
+                      "fontFamily": "Courier New, monospace"
+                    }
+                  },
+                  "forceNiceScale": true
+                },
+                "tooltip": {
+                  "theme": "dark"
+                },
+                "legend": {
+                  "show": false
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption",
+                  "type": "column",
+                  "color": "#00ff66",
+                  "statistics": {
+                    "type": "change",
+                    "period": "day",
+                    "align": "end"
+                  },
+                  "unit": " kWh",
+                  "show": {
+                    "datalabels": false,
+                    "legend_value": false
+                  },
+                  "float_precision": 1,
+                  "transform": "return x / 1000;"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
