@@ -12,6 +12,20 @@ mode `storage` ne conserve aucun historique de version.
 | `energie-avant.json` | la vue telle qu'elle était avant les modifications |
 | `energie-apres.json` | la vue telle qu'elle est maintenant |
 
+## Structure actuelle
+
+5 graphiques ont été ramenés à 3, chacun avec un rôle distinct :
+
+| Graphique | Contenu | Repère de comparaison |
+|---|---|---|
+| Courbe du jour (24 h) | puissance en W, moyennes 10 min | marqueurs du pic et du creux |
+| Conso par jour (7 j) | kWh/jour, barres | barres grises de la semaine précédente, jour par jour |
+| Tendance par semaine | kWh/semaine sur 30 j | 4–5 barres comparables entre elles |
+
+Les deux histogrammes de coût ont été supprimés : le coût vaut la conso ×
+le prix du kWh, leurs barres avaient donc exactement la même forme que celles
+de la conso. Le montant du jour reste affiché dans la tuile « COÛT DU JOUR ».
+
 ## Ce qui a changé
 
 - **Dates décalées d'un jour** — les histogrammes utilisaient

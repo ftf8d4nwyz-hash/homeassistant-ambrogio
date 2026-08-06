@@ -311,7 +311,7 @@
           "cards": [
             {
               "type": "heading",
-              "heading": "» COÛT EN EUROS _",
+              "heading": "» COÛT DU JOUR _",
               "card_mod": {
                 "style": ".title { color: #ffffff !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; letter-spacing: 0.5px !important; text-shadow: 0 0 8px #ffd700 !important; }"
               }
@@ -327,397 +327,6 @@
                 }
               },
               "icon": "mdi:currency-eur"
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "graph_span": "7d",
-              "span": {
-                "end": "day"
-              },
-              "header": {
-                "show": false
-              },
-              "card_mod": {
-                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
-              },
-              "apex_config": {
-                "chart": {
-                  "height": 280,
-                  "fontFamily": "Courier New, monospace",
-                  "background": "transparent",
-                  "parentHeightOffset": 0,
-                  "toolbar": {
-                    "show": false
-                  },
-                  "zoom": {
-                    "enabled": false
-                  },
-                  "animations": {
-                    "enabled": true,
-                    "speed": 400
-                  },
-                  "locales": [
-                    {
-                      "name": "fr",
-                      "options": {
-                        "months": [
-                          "janvier",
-                          "février",
-                          "mars",
-                          "avril",
-                          "mai",
-                          "juin",
-                          "juillet",
-                          "août",
-                          "septembre",
-                          "octobre",
-                          "novembre",
-                          "décembre"
-                        ],
-                        "shortMonths": [
-                          "janv.",
-                          "févr.",
-                          "mars",
-                          "avr.",
-                          "mai",
-                          "juin",
-                          "juil.",
-                          "août",
-                          "sept.",
-                          "oct.",
-                          "nov.",
-                          "déc."
-                        ],
-                        "days": [
-                          "dimanche",
-                          "lundi",
-                          "mardi",
-                          "mercredi",
-                          "jeudi",
-                          "vendredi",
-                          "samedi"
-                        ],
-                        "shortDays": [
-                          "dim",
-                          "lun",
-                          "mar",
-                          "mer",
-                          "jeu",
-                          "ven",
-                          "sam"
-                        ],
-                        "toolbar": {}
-                      }
-                    }
-                  ],
-                  "defaultLocale": "fr"
-                },
-                "grid": {
-                  "borderColor": "rgba(255,255,255,0.16)",
-                  "strokeDashArray": 3,
-                  "xaxis": {
-                    "lines": {
-                      "show": false
-                    }
-                  },
-                  "yaxis": {
-                    "lines": {
-                      "show": true
-                    }
-                  },
-                  "padding": {
-                    "top": 28,
-                    "right": 8,
-                    "left": 4,
-                    "bottom": 0
-                  }
-                },
-                "xaxis": {
-                  "axisBorder": {
-                    "color": "rgba(255,255,255,0.16)"
-                  },
-                  "axisTicks": {
-                    "color": "rgba(255,255,255,0.16)"
-                  },
-                  "tickAmount": 7,
-                  "labels": {
-                    "style": {
-                      "colors": "#c7d2de",
-                      "fontSize": "11px",
-                      "fontFamily": "Courier New, monospace"
-                    },
-                    "datetimeUTC": false,
-                    "hideOverlappingLabels": true,
-                    "rotate": 0,
-                    "trim": false,
-                    "format": "dd/MM"
-                  }
-                },
-                "yaxis": {
-                  "min": 0,
-                  "tickAmount": 4,
-                  "labels": {
-                    "style": {
-                      "colors": "#c7d2de",
-                      "fontSize": "11px",
-                      "fontFamily": "Courier New, monospace"
-                    },
-                    "minWidth": 0,
-                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return (v < 10 ? v.toFixed(1) : v.toFixed(0)).replace('.', ',') + ' €'; }"
-                  },
-                  "forceNiceScale": true
-                },
-                "tooltip": {
-                  "theme": "dark",
-                  "intersect": false,
-                  "shared": true,
-                  "x": {
-                    "format": "dddd dd MMM"
-                  }
-                },
-                "legend": {
-                  "show": false
-                },
-                "plotOptions": {
-                  "bar": {
-                    "borderRadius": 5,
-                    "columnWidth": "58%",
-                    "dataLabels": {
-                      "position": "top"
-                    }
-                  }
-                },
-                "dataLabels": {
-                  "enabled": true,
-                  "offsetY": -20,
-                  "style": {
-                    "fontSize": "11px",
-                    "fontWeight": 900,
-                    "fontFamily": "Courier New, monospace",
-                    "colors": [
-                      "#ffd700"
-                    ]
-                  },
-                  "background": {
-                    "enabled": false
-                  },
-                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v.toFixed(2).replace('.', ',') + ' €'; }"
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
-                  "type": "column",
-                  "color": "#ffd700",
-                  "statistics": {
-                    "type": "change",
-                    "period": "day",
-                    "align": "middle"
-                  },
-                  "unit": " €",
-                  "show": {
-                    "datalabels": true,
-                    "legend_value": false
-                  },
-                  "float_precision": 2,
-                  "name": "Coût du jour"
-                }
-              ]
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "graph_span": "30d",
-              "span": {
-                "end": "day"
-              },
-              "header": {
-                "show": false
-              },
-              "card_mod": {
-                "style": "ha-card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; }"
-              },
-              "apex_config": {
-                "chart": {
-                  "height": 260,
-                  "fontFamily": "Courier New, monospace",
-                  "background": "transparent",
-                  "parentHeightOffset": 0,
-                  "toolbar": {
-                    "show": false
-                  },
-                  "zoom": {
-                    "enabled": false
-                  },
-                  "animations": {
-                    "enabled": true,
-                    "speed": 400
-                  },
-                  "locales": [
-                    {
-                      "name": "fr",
-                      "options": {
-                        "months": [
-                          "janvier",
-                          "février",
-                          "mars",
-                          "avril",
-                          "mai",
-                          "juin",
-                          "juillet",
-                          "août",
-                          "septembre",
-                          "octobre",
-                          "novembre",
-                          "décembre"
-                        ],
-                        "shortMonths": [
-                          "janv.",
-                          "févr.",
-                          "mars",
-                          "avr.",
-                          "mai",
-                          "juin",
-                          "juil.",
-                          "août",
-                          "sept.",
-                          "oct.",
-                          "nov.",
-                          "déc."
-                        ],
-                        "days": [
-                          "dimanche",
-                          "lundi",
-                          "mardi",
-                          "mercredi",
-                          "jeudi",
-                          "vendredi",
-                          "samedi"
-                        ],
-                        "shortDays": [
-                          "dim",
-                          "lun",
-                          "mar",
-                          "mer",
-                          "jeu",
-                          "ven",
-                          "sam"
-                        ],
-                        "toolbar": {}
-                      }
-                    }
-                  ],
-                  "defaultLocale": "fr"
-                },
-                "grid": {
-                  "borderColor": "rgba(255,255,255,0.16)",
-                  "strokeDashArray": 3,
-                  "xaxis": {
-                    "lines": {
-                      "show": false
-                    }
-                  },
-                  "yaxis": {
-                    "lines": {
-                      "show": true
-                    }
-                  },
-                  "padding": {
-                    "top": 10,
-                    "right": 8,
-                    "left": 4,
-                    "bottom": 0
-                  }
-                },
-                "xaxis": {
-                  "axisBorder": {
-                    "color": "rgba(255,255,255,0.16)"
-                  },
-                  "axisTicks": {
-                    "color": "rgba(255,255,255,0.16)"
-                  },
-                  "tickAmount": 6,
-                  "labels": {
-                    "style": {
-                      "colors": "#c7d2de",
-                      "fontSize": "11px",
-                      "fontFamily": "Courier New, monospace"
-                    },
-                    "datetimeUTC": false,
-                    "hideOverlappingLabels": true,
-                    "rotate": 0,
-                    "trim": false,
-                    "format": "dd/MM"
-                  }
-                },
-                "yaxis": {
-                  "min": 0,
-                  "tickAmount": 4,
-                  "labels": {
-                    "style": {
-                      "colors": "#c7d2de",
-                      "fontSize": "11px",
-                      "fontFamily": "Courier New, monospace"
-                    },
-                    "minWidth": 0,
-                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return (v < 10 ? v.toFixed(1) : v.toFixed(0)).replace('.', ',') + ' €'; }"
-                  },
-                  "forceNiceScale": true
-                },
-                "tooltip": {
-                  "theme": "dark",
-                  "intersect": false,
-                  "shared": true,
-                  "x": {
-                    "format": "dddd dd MMM"
-                  }
-                },
-                "legend": {
-                  "show": false
-                },
-                "plotOptions": {
-                  "bar": {
-                    "borderRadius": 3,
-                    "columnWidth": "80%",
-                    "dataLabels": {
-                      "position": "top"
-                    }
-                  }
-                },
-                "dataLabels": {
-                  "enabled": false,
-                  "offsetY": -20,
-                  "style": {
-                    "fontSize": "12px",
-                    "fontWeight": 900,
-                    "fontFamily": "Courier New, monospace",
-                    "colors": [
-                      "#ffd700"
-                    ]
-                  },
-                  "background": {
-                    "enabled": false
-                  }
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
-                  "type": "column",
-                  "color": "#ffd700",
-                  "statistics": {
-                    "type": "change",
-                    "period": "day",
-                    "align": "middle"
-                  },
-                  "unit": " €",
-                  "show": {
-                    "datalabels": false,
-                    "legend_value": false
-                  },
-                  "float_precision": 2,
-                  "name": "Coût du jour"
-                }
-              ]
             }
           ]
         },
@@ -748,7 +357,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 280,
+                  "height": 300,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -832,7 +441,7 @@
                     }
                   },
                   "padding": {
-                    "top": 28,
+                    "top": 34,
                     "right": 8,
                     "left": 4,
                     "bottom": 0
@@ -882,12 +491,28 @@
                   }
                 },
                 "legend": {
-                  "show": false
+                  "show": true,
+                  "position": "top",
+                  "horizontalAlign": "right",
+                  "fontSize": "11px",
+                  "fontFamily": "Courier New, monospace",
+                  "labels": {
+                    "colors": "#c7d2de"
+                  },
+                  "markers": {
+                    "width": 10,
+                    "height": 10,
+                    "radius": 2
+                  },
+                  "itemMargin": {
+                    "horizontal": 8,
+                    "vertical": 0
+                  }
                 },
                 "plotOptions": {
                   "bar": {
-                    "borderRadius": 5,
-                    "columnWidth": "58%",
+                    "borderRadius": 3,
+                    "columnWidth": "78%",
                     "dataLabels": {
                       "position": "top"
                     }
@@ -897,7 +522,7 @@
                   "enabled": true,
                   "offsetY": -20,
                   "style": {
-                    "fontSize": "11px",
+                    "fontSize": "10px",
                     "fontWeight": 900,
                     "fontFamily": "Courier New, monospace",
                     "colors": [
@@ -907,7 +532,10 @@
                   "background": {
                     "enabled": false
                   },
-                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v.toFixed(1).replace('.', ',') + ' kWh'; }"
+                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v.toFixed(1).replace('.', ',') + ' kWh'; }",
+                  "enabledOnSeries": [
+                    0
+                  ]
                 }
               },
               "series": [
@@ -927,7 +555,26 @@
                   },
                   "float_precision": 1,
                   "transform": "return x / 1000;",
-                  "name": "Conso du jour"
+                  "name": "Cette semaine"
+                },
+                {
+                  "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption",
+                  "name": "Semaine précédente",
+                  "type": "column",
+                  "color": "#5f6b7a",
+                  "offset": "-7d",
+                  "statistics": {
+                    "type": "change",
+                    "period": "day",
+                    "align": "middle"
+                  },
+                  "unit": " kWh",
+                  "float_precision": 1,
+                  "transform": "return x / 1000;",
+                  "show": {
+                    "datalabels": false,
+                    "legend_value": false
+                  }
                 }
               ]
             }
@@ -941,7 +588,7 @@
           "cards": [
             {
               "type": "heading",
-              "heading": "» VUE MENSUELLE (30j) _",
+              "heading": "» TENDANCE PAR SEMAINE _",
               "card_mod": {
                 "style": ".title { color: #ffffff !important; font-family: 'Courier New', monospace !important; font-weight: 900 !important; letter-spacing: 0.5px !important; text-shadow: 0 0 8px #00ff66 !important; }"
               }
@@ -960,7 +607,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 260,
+                  "height": 290,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -1044,7 +691,7 @@
                     }
                   },
                   "padding": {
-                    "top": 10,
+                    "top": 32,
                     "right": 8,
                     "left": 4,
                     "bottom": 0
@@ -1057,7 +704,7 @@
                   "axisTicks": {
                     "color": "rgba(255,255,255,0.16)"
                   },
-                  "tickAmount": 6,
+                  "tickAmount": 5,
                   "labels": {
                     "style": {
                       "colors": "#c7d2de",
@@ -1090,7 +737,7 @@
                   "intersect": false,
                   "shared": true,
                   "x": {
-                    "format": "dddd dd MMM"
+                    "format": "dd MMM"
                   }
                 },
                 "legend": {
@@ -1098,15 +745,15 @@
                 },
                 "plotOptions": {
                   "bar": {
-                    "borderRadius": 3,
-                    "columnWidth": "80%",
+                    "borderRadius": 5,
+                    "columnWidth": "55%",
                     "dataLabels": {
                       "position": "top"
                     }
                   }
                 },
                 "dataLabels": {
-                  "enabled": false,
+                  "enabled": true,
                   "offsetY": -20,
                   "style": {
                     "fontSize": "12px",
@@ -1118,7 +765,8 @@
                   },
                   "background": {
                     "enabled": false
-                  }
+                  },
+                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return Math.round(v) + ' kWh'; }"
                 }
               },
               "series": [
@@ -1128,17 +776,17 @@
                   "color": "#00ff66",
                   "statistics": {
                     "type": "change",
-                    "period": "day",
+                    "period": "week",
                     "align": "middle"
                   },
                   "unit": " kWh",
                   "show": {
-                    "datalabels": false,
+                    "datalabels": true,
                     "legend_value": false
                   },
-                  "float_precision": 1,
+                  "float_precision": 0,
                   "transform": "return x / 1000;",
-                  "name": "Conso du jour"
+                  "name": "Conso de la semaine"
                 }
               ]
             }
