@@ -41,16 +41,6 @@
               }
             },
             {
-              "type": "markdown",
-              "content": "Puissance tirée par toute la maison à l'instant présent, en watts (W). La jauge va de 0 à 9 000 W : 🟢 moins de 3 kW · 🟠 3 à 6 kW · 🔴 plus de 6 kW.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #00f3ff !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "grid",
               "columns": 2,
               "square": false,
@@ -99,16 +89,6 @@
               }
             },
             {
-              "type": "markdown",
-              "content": "Puissance de la maison sur les dernières 24 heures, en watts (W). Chaque point est une moyenne sur 10 minutes ; les repères marquent le pic et le creux de la journée. L'heure se lit en bas, la puissance à gauche.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #b400ff !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "custom:apexcharts-card",
               "graph_span": "24h",
               "header": {
@@ -122,7 +102,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 250,
+                  "height": 290,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -242,8 +222,10 @@
                       "fontSize": "11px",
                       "fontFamily": "Courier New, monospace"
                     },
-                    "minWidth": 0
-                  }
+                    "minWidth": 0,
+                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v >= 1000 ? (v/1000).toFixed(1).replace('.', ',') + ' kW' : Math.round(v) + ' W'; }"
+                  },
+                  "forceNiceScale": true
                 },
                 "tooltip": {
                   "theme": "dark",
@@ -311,16 +293,6 @@
             },
             {
               "type": "markdown",
-              "content": "Total d'énergie mesuré par le compteur depuis sa mise en service. Ce chiffre ne fait que monter : c'est une référence, pas un suivi quotidien.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #ff0055 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
-              "type": "markdown",
               "content": "## ⚡ {{ '{:,}'.format((states('sensor.capteur_de_consommation_electrique_electric_energy_consumption')|float(0)/1000)|round(0)|int)|replace(',', ' ') }} kWh\n\n###### TOTAL CUMULÉ DEPUIS L'INSTALLATION",
               "card_mod": {
                 "style": {
@@ -345,16 +317,6 @@
               }
             },
             {
-              "type": "markdown",
-              "content": "Ce que coûte l'électricité. En haut le total dépensé depuis ce matin, en dessous le détail jour par jour : 1 barre = 1 journée, en euros (€).",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #ffd700 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "tile",
               "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
               "name": "DEPUIS CE MATIN",
@@ -365,16 +327,6 @@
                 }
               },
               "icon": "mdi:currency-eur"
-            },
-            {
-              "type": "markdown",
-              "content": "💶 7 derniers jours — le chiffre au-dessus de chaque barre est le coût de cette journée, en €.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #ffd700 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
             },
             {
               "type": "custom:apexcharts-card",
@@ -390,7 +342,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 250,
+                  "height": 280,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -510,8 +462,10 @@
                       "fontSize": "11px",
                       "fontFamily": "Courier New, monospace"
                     },
-                    "minWidth": 0
-                  }
+                    "minWidth": 0,
+                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return (v < 10 ? v.toFixed(1) : v.toFixed(0)).replace('.', ',') + ' €'; }"
+                  },
+                  "forceNiceScale": true
                 },
                 "tooltip": {
                   "theme": "dark",
@@ -537,7 +491,7 @@
                   "enabled": true,
                   "offsetY": -20,
                   "style": {
-                    "fontSize": "12px",
+                    "fontSize": "11px",
                     "fontWeight": 900,
                     "fontFamily": "Courier New, monospace",
                     "colors": [
@@ -546,7 +500,8 @@
                   },
                   "background": {
                     "enabled": false
-                  }
+                  },
+                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v.toFixed(2).replace('.', ',') + ' €'; }"
                 }
               },
               "series": [
@@ -570,16 +525,6 @@
               ]
             },
             {
-              "type": "markdown",
-              "content": "💶 30 derniers jours — même donnée sur un mois. Touchez une barre pour voir sa date et son coût exact.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #ffd700 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "custom:apexcharts-card",
               "graph_span": "30d",
               "span": {
@@ -593,7 +538,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 230,
+                  "height": 260,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -713,8 +658,10 @@
                       "fontSize": "11px",
                       "fontFamily": "Courier New, monospace"
                     },
-                    "minWidth": 0
-                  }
+                    "minWidth": 0,
+                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return (v < 10 ? v.toFixed(1) : v.toFixed(0)).replace('.', ',') + ' €'; }"
+                  },
+                  "forceNiceScale": true
                 },
                 "tooltip": {
                   "theme": "dark",
@@ -788,16 +735,6 @@
               }
             },
             {
-              "type": "markdown",
-              "content": "Énergie consommée par la maison chaque jour : 1 barre = 1 journée, en kilowattheures (kWh). Le chiffre au-dessus de chaque barre est la conso de ce jour-là, et la date sous la barre est bien celle de la journée mesurée.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #ff9900 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "custom:apexcharts-card",
               "graph_span": "7d",
               "span": {
@@ -811,7 +748,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 250,
+                  "height": 280,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -931,8 +868,10 @@
                       "fontSize": "11px",
                       "fontFamily": "Courier New, monospace"
                     },
-                    "minWidth": 0
-                  }
+                    "minWidth": 0,
+                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return Math.round(v) + ' kWh'; }"
+                  },
+                  "forceNiceScale": true
                 },
                 "tooltip": {
                   "theme": "dark",
@@ -958,7 +897,7 @@
                   "enabled": true,
                   "offsetY": -20,
                   "style": {
-                    "fontSize": "12px",
+                    "fontSize": "11px",
                     "fontWeight": 900,
                     "fontFamily": "Courier New, monospace",
                     "colors": [
@@ -967,7 +906,8 @@
                   },
                   "background": {
                     "enabled": false
-                  }
+                  },
+                  "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return v.toFixed(1).replace('.', ',') + ' kWh'; }"
                 }
               },
               "series": [
@@ -1007,16 +947,6 @@
               }
             },
             {
-              "type": "markdown",
-              "content": "La même consommation quotidienne, mais sur 30 jours, pour voir la tendance du mois. 1 barre = 1 journée, en kWh. Touchez une barre pour afficher sa date et sa valeur exacte.",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card { background: rgba(255,255,255,0.03) !important; border: none !important; border-left: 3px solid #00ff66 !important; box-shadow: none !important; border-radius: 4px !important; margin: -6px 2px 8px 2px !important; padding: 6px 10px !important; }",
-                  "ha-markdown$": "p { color: rgba(255,255,255,0.87) !important; font-family: 'Courier New', monospace !important; font-size: 0.85em !important; line-height: 1.5 !important; letter-spacing: 0.2px !important; margin: 0 !important; }"
-                }
-              }
-            },
-            {
               "type": "custom:apexcharts-card",
               "graph_span": "30d",
               "span": {
@@ -1030,7 +960,7 @@
               },
               "apex_config": {
                 "chart": {
-                  "height": 230,
+                  "height": 260,
                   "fontFamily": "Courier New, monospace",
                   "background": "transparent",
                   "parentHeightOffset": 0,
@@ -1150,8 +1080,10 @@
                       "fontSize": "11px",
                       "fontFamily": "Courier New, monospace"
                     },
-                    "minWidth": 0
-                  }
+                    "minWidth": 0,
+                    "formatter": "EVAL:function(v){ if (v === null || v === undefined) return ''; return Math.round(v) + ' kWh'; }"
+                  },
+                  "forceNiceScale": true
                 },
                 "tooltip": {
                   "theme": "dark",

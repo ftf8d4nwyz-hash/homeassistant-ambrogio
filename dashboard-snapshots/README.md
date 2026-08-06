@@ -29,8 +29,14 @@ mode `storage` ne conserve aucun historique de version.
   est limité (`tickAmount`) au lieu d'une par jour.
 - **Courbe 24 h** — `curve: straight` au lieu de `smooth` (le lissage inventait
   des valeurs entre deux mesures) et repères sur le pic et le creux du jour.
-- **Textes d'explication** — réécrits, et passés du néon au blanc adouci avec un
-  liseré de couleur à gauche.
+- **Unités dans le graphique** — l'axe vertical affiche directement `45 kWh`,
+  `12 €`, `1,7 kW` (formatters `EVAL:` d'apexcharts-card), et les étiquettes
+  au-dessus des barres portent leur unité, avec la virgule décimale française.
+  Plus besoin de légende écrite pour savoir ce qu'on lit.
+- **Textes d'explication supprimés** — les blocs de texte sous chaque titre ont
+  été retirés ; l'information est portée par le graphique lui-même.
+- **Graphiques agrandis** — hauteurs portées à 260–290 px (l'espace libéré par
+  les textes), et `forceNiceScale` pour des graduations rondes.
 - **Onglet** — la vue a maintenant un chemin stable (`/dashboard-maison/energie`)
   et un titre (`ÉNERGIE`) ; elle n'avait qu'une icône.
 
