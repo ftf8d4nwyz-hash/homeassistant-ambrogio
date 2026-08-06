@@ -60,9 +60,20 @@ Deux boutons apparaissent sous les infos quand la personne n'est pas à la maiso
 - **🗺️ CARTE** — navigation interne vers le tableau de bord `/map` (carte HA
   live), via `history.pushState` + événement `location-changed` pour éviter un
   rechargement complet de la page.
-- **🚦 WAZE** — `https://www.waze.com/ul?ll=<lat>,<lon>&navigate=yes`, construit
-  avec les coordonnées courantes de la personne ; ouvre l'app Waze en navigation
-  vers sa position.
+- **🚦 WAZE** — `https://www.waze.com/ul?ll=<lat>%2C<lon>&zoom=16`, construit avec
+  les coordonnées courantes de la personne ; centre la carte Waze sur elle.
+
+  ⚠️ **La virgule doit être encodée en `%2C`.** Une première version passait
+  `ll=49.12,6.18` en clair : Waze n'arrive pas à parser le paramètre et retombe
+  silencieusement sur la position de celui qui clique. La documentation Waze
+  précise que les valeurs de paramètres doivent être URL-encodées.
+
+  Les coordonnées sont arrondies à 6 décimales (~10 cm) — la valeur brute du
+  `person` en compte quinze.
+
+  `navigate=yes` a été retiré : il lance un itinéraire vers la personne au lieu
+  d'afficher sa position. Le rajouter restaure le comportement « aller la
+  chercher ».
 
 Un clic sur la carte elle-même ouvre toujours la fiche détaillée HA de la
 personne, qui contient déjà une carte live avec l'historique de trajet.
