@@ -1,107 +1,84 @@
-# NEXUS — Blueprint dashboard premium (Home Assistant)
+# NEXUS — Poste de pilotage (Home Assistant)
 
-Dashboard déployé sur l'instance HA : **NEXUS** → `/dashboard-nexus`
-(entrée dédiée dans la barre latérale, icône `mdi:hexagon-multiple-outline`).
+Dashboard déployé : **NEXUS** → `/dashboard-nexus` (entrée dédiée dans la
+barre latérale, icône `mdi:space-station`).
 
-- `build_nexus.py` — générateur de la config Lovelace (source de vérité).
-- `nexus.lovelace.json` — config générée, telle que déployée.
+- `nexus_transform.py` — source de vérité. C'est le corps exact passé en
+  `python_transform` à `ha_config_set_dashboard` : il définit les tokens
+  de style une seule fois et génère les 4 vues par boucles.
+- `nexus.lovelace.json` — config générée, telle que déployée (~237 Ko).
 
-Régénérer : `python3 build_nexus.py > nexus.lovelace.json`
+Régénérer / vérifier hors-ligne :
+
+```bash
+python3 -c "
+import json; g={}; l={'config':{'views':[]}}
+exec(open('nexus_transform.py').read(), g, l)
+json.dump(l['config'], open('nexus.lovelace.json','w'), ensure_ascii=False, indent=1)"
+```
+
+> Le `exec` avec `globals`/`locals` séparés n'est pas un détail : c'est
+> exactement ainsi que le bac à sable HA évalue le transform. Les fonctions
+> n'y voient pas les noms du module — d'où les `lambda ..., _H=HUD:` qui
+> capturent les constantes en argument par défaut. Un `def` classique
+> échoue avec `NameError`.
 
 ---
 
-## 1. Le blueprint 30 minutes
+## Les 4 ponts
 
-**Séquence de build** (ordre imposé — chaque étape débloque la suivante) :
+| Vue | Accent | Contenu |
+|-----|--------|---------|
+| **Passerelle** | cyan `#00E5FF` | Hublot étoilé, indicateurs primaires, télémétrie texte, commandes rapides, secteurs éclairés, support-vie, soutes |
+| **Réacteur** | ambre `#FFB020` | Flux 24 h, jauge radar, cycles 7 jours, paramètres |
+| **Modules** | violet `#8B5CF6` | Modules d'habitation, sas & hublots, régulation thermique, ambiances |
+| **Boucliers** | turquoise `#14F1D9` | Alarme, détecteurs de proximité, optiques externes, journal de bord |
 
-| # | Étape | Durée | Pourquoi à ce moment |
-|---|-------|-------|----------------------|
-| 1 | Inventaire des entités réelles | 5 min | Un dashboard premium se casse sur un `entity not found`. Tout est vérifié avant la première carte. |
-| 2 | Tokens de design (couleurs, rayons, ombres, easing) | 3 min | Figés une fois, réutilisés partout — c'est ce qui produit la cohérence. |
-| 3 | Squelette de navigation + 4 vues vides | 4 min | La structure d'abord, le contenu ensuite. |
-| 4 | Vue Accueil (hero + KPI + actions) | 8 min | La vue qui fait 90 % de l'impression. |
-| 5 | Vue Énergie (charts animés) | 6 min | Le morceau « waouh », isolé pour ne pas alourdir l'accueil. |
-| 6 | Vues Maison / Sécurité | 4 min | Densité utile, styling minimal assumé. |
+## Palette
 
-**Layout** — vues `sections`, grille 12 colonnes, `max_columns: 4`.
-Hero pleine largeur, puis paires de sections `column_span: 2` : l'œil lit
-en Z, jamais en colonne infinie.
+| Rôle | Hex |
+|------|-----|
+| Vide / coque | `#02040A` → `#0A1020` |
+| HUD cyan | `#00E5FF` |
+| Plasma turquoise | `#14F1D9` |
+| Alerte ambre | `#FFB020` |
+| Alarme rouge | `#FF3B5C` |
+| Fusion magenta | `#FF2FB9` |
+| Xénon violet | `#8B5CF6` |
+| Texte | `#DFF6FF` · secondaire `#6C89A8` |
 
-## 2. Data visualization
+## Effets
 
-Trois formes, trois intentions — jamais deux fois la même pour la même question :
+| Effet | Mise en œuvre |
+|-------|---------------|
+| **Crochets d'angle HUD** | `ha-card::before`, 8 `linear-gradient` positionnés dans les 4 coins — pas d'image, pas de SVG |
+| **Balayage scanline** | `ha-card::after`, bande lumineuse qui descend en boucle (`nxScan`, 6,5 s), décalée par carte |
+| **Trame CRT** | `repeating-linear-gradient` 3 px dans le fond de chaque carte |
+| **Séquence d'allumage** | `nxBoot` — surexposition + `scaleY` qui se résorbe, retard échelonné par carte |
+| **Champ d'étoiles** | 52 `radial-gradient` générés par un LCG déterministe ; 30 fixes en fond du hublot, 22 sur une couche `::before` en dérive lente (`nxDrift`, 140 s) |
+| **Radar** | `conic-gradient` en rotation derrière la jauge de charge (`nxRadar`, 3,8 s) |
+| **Alerte pulsante** | Les détecteurs passent en rouge et pulsent (`nxAlert`) quand l'entité est `on` — template card-mod sur `config.entity` |
+| **Halo néon** | `drop-shadow` sur les icônes, les courbes ApexCharts (`#graph`) et les titres |
+| **Chips angulaires** | `clip-path: polygon(...)` sur la navigation — coins biseautés, pas d'arrondi |
+| **Typographie** | Monospace système, majuscules, `letter-spacing` 0,14–0,28 em |
 
-| Carte | Forme | Question posée |
-|-------|-------|----------------|
-| Puissance 24 h | aire lissée + dégradé | « comment ça évolue ? » |
-| Énergie 7 j | barres arrondies | « comment on compare jour à jour ? » |
-| Charge instantanée | radial | « où on en est *maintenant* ? » |
+## Télémétrie
 
-Animations ApexCharts : entrée `easeinout` 900 ms, `animateGradually`
-150 ms (les séries se dessinent en cascade), `dynamicAnimation` 420 ms
-pour que les mises à jour temps réel glissent au lieu de sauter.
+Carte markdown en bloc de code : jauge en caractères pleins (`▓▓▓▓░░░░░`),
+lignes alignées au `format` Jinja. Aucune dépendance — juste du texte
+monospace qui se met à jour en temps réel.
 
-## 3. Dark mode
+## Ce qui reste vrai
 
-| Rôle | Valeur |
-|------|--------|
-| Fond carte | `linear-gradient(155deg,#1c2333f0,#0e121bf7)` |
-| Bordure | `#ffffff12` (≈ 7 % blanc) |
-| Ombre | `0 12px 34px -16px #000000d9` + `inset 0 1px 0 #ffffff0d` |
-| Texte principal | `#E6EAF2` |
-| Texte secondaire | `#8B95A7` |
-| Accents | cyan `#22D3EE` · bleu `#5B8DEF` · violet `#A78BFA` · vert `#34D399` · ambre `#FBBF24` · rouge `#F87171` |
-
-Le liseré interne clair (`inset`) est ce qui donne l'effet « verre » :
-sans lui les cartes sombres paraissent plates.
-Contraste texte secondaire sur fond carte ≈ 5.6:1 — au-dessus du seuil AA
-pour le texte courant.
-
-## 4. Navigation
-
-Barre pleine largeur en tête de chaque vue, deux états pilotés par
-`input_boolean.nexus_navigation_compacte` :
-**étendu** (icône + libellé) ↔ **compact** (icônes seules), bascule par le
-bouton « Réduire ». L'onglet actif porte son accent en fond + bordure ;
-les autres restent gris et ne se colorent qu'au survol.
-
-## 5. États vides
-
-Section « Lumières actives » : une carte `entity-filter` (`show_empty: false`)
-affiche uniquement les lumières allumées. Quand il n'y en a aucune, une carte
-d'état vide prend le relais — bordure pointillée, centrée :
-
-> 🌙 **Tout est éteint**
-> Aucune lumière allumée dans la maison. Les pièces actives apparaîtront ici
-> automatiquement.
-
-Elle se masque automatiquement dès qu'une lumière s'allume
-(`display:none` conditionnel via template card-mod).
-
-## 6. Squelettes de chargement
-
-Toute tuile dont l'entité est `unavailable` / `unknown` bascule en squelette :
-texte et icône passés en `transparent`, dégradé qui balaie la carte
-(`nxSh`, 1.6 s, infini), interactions désactivées.
-Visible en conditions réelles sur la tuile « Lave-linge ».
-
-## 7. Résultat honnête
-
-**Ce qui atteint vraiment le niveau « SaaS premium »** — la hiérarchie
-typographique du hero, la cohérence des accents, les charts animés, les
-états vides et squelettes, les micro-interactions au survol.
-
-**Ce qui ne l'atteint pas, et pourquoi :**
-
-- **Pas de vraie sidebar rétractable en largeur.** Les vues `sections` ne
-  permettent pas à une section de changer de `column_span` selon un état.
-  La barre horizontale rétractable est le meilleur équivalent honnête ;
-  la sidebar native de HA (ou `kiosk-mode`, déjà installé) reste l'outil
-  pour ça.
-- **Les squelettes ne sont pas de vrais états de chargement.** HA pousse
-  l'état par websocket, il n'y a pas de phase « loading » à masquer.
-  Le squelette couvre le cas réel équivalent : l'entité indisponible.
-- **Le styling repose sur card-mod**, qui cible le shadow DOM du frontend.
-  À revérifier après chaque montée de version majeure de HA. Un thème
-  (`frontend: themes:`) serait plus robuste, mais impose une modification
-  de `configuration.yaml` — écartée ici volontairement.
+- **La barre de navigation ne rétrécit pas en largeur.** Les vues
+  `sections` ne permettent pas à une section de changer de `column_span`
+  selon un état. La bascule libellés ↔ icônes est l'équivalent honnête.
+- **Les squelettes ne sont pas des états de chargement.** HA pousse l'état
+  par websocket. Le squelette couvre le cas réel : entité indisponible.
+- **Tout repose sur card-mod**, qui cible le shadow DOM du frontend :
+  crochets d'angle, scanlines et halos sont à revérifier après chaque
+  montée de version majeure de HA. `configuration.yaml` n'est pas touché.
+- **Coût de rendu.** Une soixantaine de cartes portent chacune deux
+  pseudo-éléments animés. C'est fluide sur un poste récent ; sur une
+  tablette murale d'entrée de gamme, prévoir de désactiver les scanlines
+  (supprimer le bloc `ha-card::after` de `HUD`).
