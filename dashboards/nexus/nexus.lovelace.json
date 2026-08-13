@@ -1,0 +1,2399 @@
+{
+ "views": [
+  {
+   "title": "Accueil",
+   "path": "accueil",
+   "icon": "mdi:view-dashboard-outline",
+   "type": "sections",
+   "max_columns": 4,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "person.faure",
+     "show_name": true
+    },
+    {
+     "type": "entity",
+     "entity": "person.maryline",
+     "show_name": true
+    },
+    {
+     "type": "entity",
+     "entity": "alarm_control_panel.alarmo",
+     "show_name": true,
+     "color": "green"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.salon_temperature_exterieure",
+     "show_name": true,
+     "color": "cyan"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#22D3EE26,#0e121bf5);border:1px solid #22D3EE8c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#22D3EE;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         },
+         "name": "Accueil"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Énergie"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Maison"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Sécurité"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-left",
+         "name": "Réduire",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "off"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#22D3EE26,#0e121bf5);border:1px solid #22D3EE8c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#22D3EE;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-right",
+         "name": "Réduire",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "on"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "markdown",
+       "content": "{% set h = now().hour %}{% set sal = 'Bonne nuit' if h < 6 else ('Bonjour' if h < 12 else ('Bon après-midi' if h < 18 else 'Bonsoir')) %}{% set on = states.light | selectattr('state','eq','on') | list | count %}{% set ici = states.person | selectattr('state','eq','home') | list | count %}{% set w = states('weather.forecast_maison') %}{% set t = state_attr('weather.forecast_maison','temperature') %}{% set p = states('sensor.capteur_de_consommation_electrique_electric_power_consumption') %}# {{ sal }}\n### {{ t | round(0) if t is not none else '—' }}°C · {{ p | int(0) }} W · {{ on }} lumière{{ 's' if on > 1 }} allumée{{ 's' if on > 1 }}\n{{ ici }} personne{{ 's' if ici > 1 }} à la maison — {{ now().strftime('%A %d %B') }}",
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:radial-gradient(120% 180% at 0% 0%,#22d3ee38 0%,#5b8def21 34%,#0c1018f7 72%);border:1px solid #ffffff17;border-radius:22px;box-shadow:0 22px 60px -26px #000000f2,inset 0 1px 0 #ffffff12;padding:6px 4px;animation:nxIn .6s cubic-bezier(.22,.61,.36,1) both}ha-card h1{font-size:34px;font-weight:700;letter-spacing:-.02em;margin:4px 0 2px;line-height:1.1}ha-card h3{font-size:15px;font-weight:600;color:#22D3EE;margin:0 0 6px}ha-card p{color:#8B95A7;font-size:13px;margin:0}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Indicateurs clés",
+       "heading_style": "title",
+       "icon": "mdi:chart-box-outline"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+       "name": "Puissance",
+       "icon": "mdi:flash",
+       "color": "cyan",
+       "hide_state": false,
+       "vertical": false,
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "trend-graph",
+         "hours_to_show": 12
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.couloir_capteur_de_consommation_electrique_energie_maison_du_jour",
+       "name": "Énergie du jour",
+       "icon": "mdi:home-lightning-bolt",
+       "color": "amber",
+       "hide_state": false,
+       "vertical": false,
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "trend-graph",
+         "hours_to_show": 24
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
+       "name": "Coût cumulé",
+       "icon": "mdi:currency-eur",
+       "color": "green",
+       "hide_state": false,
+       "vertical": false,
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "trend-graph",
+         "hours_to_show": 48
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.15s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.salon_temperature_exterieure",
+       "name": "Extérieur",
+       "icon": "mdi:thermometer",
+       "color": "purple",
+       "hide_state": false,
+       "vertical": false,
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "trend-graph",
+         "hours_to_show": 24
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.20s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#A78BFA59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #A78BFA2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Actions rapides",
+       "heading_style": "title",
+       "icon": "mdi:gesture-tap-button"
+      },
+      {
+       "type": "grid",
+       "columns": 3,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "name": "Tout allumer",
+         "icon": "mdi:lightbulb-on-outline",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.favoris_tout_allumer"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#FBBF24;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Mode nuit",
+         "icon": "mdi:weather-night",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.favoris_tout_eteindre"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.08s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#A78BFA59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #A78BFA2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#A78BFA;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Volets",
+         "icon": "mdi:window-shutter",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.fermer_tous_les_volets"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.11s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#5B8DEF59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #5B8DEF2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#5B8DEF;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Cinéma",
+         "icon": "mdi:movie-open-outline",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.cinema_mode_cinema"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.14s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#F8717159;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #F871712b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#F87171;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Récap",
+         "icon": "mdi:bullhorn-outline",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.recap_maison"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.17s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#22D3EE;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Mode absent",
+         "icon": "mdi:home-export-outline",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_boolean.toggle",
+          "target": {
+           "entity_id": "input_boolean.mode_absent"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.20s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#34D399;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Lumières actives",
+       "heading_style": "title",
+       "icon": "mdi:lightbulb-group-outline"
+      },
+      {
+       "type": "entity-filter",
+       "entities": [
+        "light.piece_de_vie",
+        "light.cuisine",
+        "light.salon_3",
+        "light.billard",
+        "light.cinema",
+        "light.dressing",
+        "light.escalier_rez_de_chaussee",
+        "light.escalier_1ere_etage"
+       ],
+       "state_filter": [
+        "on"
+       ],
+       "card": {
+        "type": "glance",
+        "columns": 4,
+        "show_state": true,
+        "state_color": true
+       },
+       "show_empty": false,
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "### 🌙 Tout est éteint\nAucune lumière allumée dans la maison. Les pièces actives apparaîtront ici automatiquement.",
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{{% if states.light | selectattr('state','eq','on') | list | count > 0 %}display:none;{% endif %}--ha-card-background:transparent;background:linear-gradient(155deg,#181e2c8c,#0d1119b3);border:1px dashed #ffffff21;border-radius:18px;box-shadow:none;text-align:center;padding:10px 4px;animation:nxIn .5s cubic-bezier(.22,.61,.36,1) both}ha-card h3{font-size:16px;font-weight:600;margin:6px 0 4px}ha-card p{color:#8B95A7;font-size:13px;max-width:34ch;margin:0 auto 6px}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Confort",
+       "heading_style": "title",
+       "icon": "mdi:sofa-outline"
+      },
+      {
+       "type": "tile",
+       "entity": "climate.salon",
+       "name": "Clim salon",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "climate.cinema",
+       "name": "Clim cinéma",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#A78BFA59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #A78BFA2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.tous_les_volets",
+       "name": "Tous les volets",
+       "features": [
+        {
+         "type": "cover-open-close"
+        },
+        {
+         "type": "cover-position"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.15s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#5B8DEF59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #5B8DEF2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "vacuum.roborock_s7_maxv",
+       "name": "Aspirateur",
+       "features": [
+        {
+         "type": "vacuum-commands",
+         "commands": [
+          "start_pause",
+          "return_home",
+          "locate"
+         ]
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.20s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Machines",
+       "heading_style": "subtitle",
+       "icon": "mdi:washing-machine"
+      },
+      {
+       "type": "markdown",
+       "text_only": true,
+       "content": "Les tuiles ci-dessous passent en **squelette scintillant** tant que l'appareil ne remonte pas d'état — pas d'écran vide, pas de « unavailable » brut.",
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{color:#8B95A7;font-size:12.5px;}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.machine_a_laver_consommation_electrique",
+       "name": "Lave-linge",
+       "icon": "mdi:washing-machine",
+       "grid_options": {
+        "columns": 4,
+        "rows": 1
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.seche_linge_en_marche",
+       "name": "Sèche-linge",
+       "icon": "mdi:tumble-dryer",
+       "grid_options": {
+        "columns": 4,
+        "rows": 1
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.voiture_en_charge",
+       "name": "Voiture",
+       "icon": "mdi:ev-station",
+       "grid_options": {
+        "columns": 4,
+        "rows": 1
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.15s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Énergie",
+   "path": "energie",
+   "icon": "mdi:lightning-bolt-outline",
+   "type": "sections",
+   "max_columns": 4,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+     "show_name": true,
+     "color": "cyan"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.couloir_capteur_de_consommation_electrique_energie_maison_du_jour",
+     "show_name": true,
+     "color": "amber"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption_cost",
+     "show_name": true,
+     "color": "green"
+    },
+    {
+     "type": "entity",
+     "entity": "input_number.prix_du_kwh_alpiq",
+     "show_name": true,
+     "color": "grey"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Accueil"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#FBBF2426,#0e121bf5);border:1px solid #FBBF248c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#FBBF24;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         },
+         "name": "Énergie"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Maison"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Sécurité"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-left",
+         "name": "Réduire",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "off"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#FBBF2426,#0e121bf5);border:1px solid #FBBF248c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#FBBF24;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-right",
+         "name": "Réduire",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "on"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 3,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Consommation temps réel",
+       "heading_style": "title",
+       "icon": "mdi:chart-areaspline"
+      },
+      {
+       "type": "custom:apexcharts-card",
+       "graph_span": "24h",
+       "header": {
+        "show": true,
+        "title": "Puissance instantanée · 24 h",
+        "show_states": true,
+        "colorize_states": true
+       },
+       "series": [
+        {
+         "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+         "name": "Maison",
+         "type": "area",
+         "color": "#22D3EE",
+         "stroke_width": 2.5,
+         "curve": "smooth",
+         "float_precision": 0,
+         "group_by": {
+          "func": "avg",
+          "duration": "10min"
+         },
+         "show": {
+          "extremas": true
+         }
+        }
+       ],
+       "apex_config": {
+        "chart": {
+         "background": "transparent",
+         "toolbar": {
+          "show": false
+         },
+         "zoom": {
+          "enabled": false
+         },
+         "parentHeightOffset": 0,
+         "fontFamily": "inherit",
+         "animations": {
+          "enabled": true,
+          "easing": "easeinout",
+          "speed": 900,
+          "animateGradually": {
+           "enabled": true,
+           "delay": 160
+          },
+          "dynamicAnimation": {
+           "enabled": true,
+           "speed": 420
+          }
+         },
+         "height": 280
+        },
+        "grid": {
+         "borderColor": "rgba(255,255,255,.06)",
+         "strokeDashArray": 4,
+         "padding": {
+          "left": 4,
+          "right": 4
+         }
+        },
+        "dataLabels": {
+         "enabled": false
+        },
+        "legend": {
+         "show": false
+        },
+        "tooltip": {
+         "theme": "dark",
+         "x": {
+          "format": "dd MMM · HH:mm"
+         }
+        },
+        "xaxis": {
+         "axisBorder": {
+          "show": false
+         },
+         "axisTicks": {
+          "show": false
+         },
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "yaxis": {
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "stroke": {
+         "curve": "smooth",
+         "width": 2.5,
+         "lineCap": "round"
+        },
+        "fill": {
+         "type": "gradient",
+         "gradient": {
+          "shadeIntensity": 1,
+          "opacityFrom": 0.5,
+          "opacityTo": 0.02,
+          "stops": [
+           0,
+           88,
+           100
+          ]
+         }
+        }
+       },
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card #header__title{font-size:15px;font-weight:600;letter-spacing:-.01em}ha-card #header__states{opacity:.95}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 1,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Charge",
+       "heading_style": "title",
+       "icon": "mdi:gauge"
+      },
+      {
+       "type": "custom:apexcharts-card",
+       "graph_span": "5min",
+       "header": {
+        "show": true,
+        "title": "Charge instantanée",
+        "show_states": true,
+        "colorize_states": true
+       },
+       "series": [
+        {
+         "entity": "sensor.capteur_de_consommation_electrique_electric_power_consumption",
+         "name": "Maison",
+         "color": "#FBBF24",
+         "float_precision": 0,
+         "max_value": 9000,
+         "show": {
+          "header_color_threshold": true
+         }
+        }
+       ],
+       "apex_config": {
+        "chart": {
+         "background": "transparent",
+         "toolbar": {
+          "show": false
+         },
+         "zoom": {
+          "enabled": false
+         },
+         "parentHeightOffset": 0,
+         "fontFamily": "inherit",
+         "animations": {
+          "enabled": true,
+          "easing": "easeinout",
+          "speed": 900,
+          "animateGradually": {
+           "enabled": true,
+           "delay": 160
+          },
+          "dynamicAnimation": {
+           "enabled": true,
+           "speed": 420
+          }
+         },
+         "height": 250
+        },
+        "grid": {
+         "borderColor": "rgba(255,255,255,.06)",
+         "strokeDashArray": 4,
+         "padding": {
+          "top": -10,
+          "bottom": -10
+         }
+        },
+        "dataLabels": {
+         "enabled": false
+        },
+        "legend": {
+         "show": false
+        },
+        "tooltip": {
+         "theme": "dark",
+         "x": {
+          "format": "dd MMM · HH:mm"
+         }
+        },
+        "xaxis": {
+         "axisBorder": {
+          "show": false
+         },
+         "axisTicks": {
+          "show": false
+         },
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "yaxis": {
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "plotOptions": {
+         "radialBar": {
+          "startAngle": -125,
+          "endAngle": 125,
+          "hollow": {
+           "size": "62%"
+          },
+          "track": {
+           "background": "rgba(255,255,255,.06)",
+           "strokeWidth": "100%"
+          },
+          "dataLabels": {
+           "name": {
+            "show": true,
+            "color": "#8B95A7",
+            "fontSize": "12px",
+            "offsetY": 22
+           },
+           "value": {
+            "show": true,
+            "color": "#E6EAF2",
+            "fontSize": "30px",
+            "fontWeight": 700,
+            "offsetY": -14
+           }
+          }
+         }
+        },
+        "fill": {
+         "type": "gradient",
+         "gradient": {
+          "shade": "dark",
+          "type": "horizontal",
+          "gradientToColors": [
+           "#F87171"
+          ],
+          "stops": [
+           0,
+           100
+          ]
+         }
+        },
+        "stroke": {
+         "lineCap": "round"
+        }
+       },
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.15s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card #header__title{font-size:15px;font-weight:600;letter-spacing:-.01em}ha-card #header__states{opacity:.95}"
+       },
+       "chart_type": "radialBar"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Historique",
+       "heading_style": "title",
+       "icon": "mdi:chart-bar"
+      },
+      {
+       "type": "custom:apexcharts-card",
+       "graph_span": "7d",
+       "header": {
+        "show": true,
+        "title": "Énergie quotidienne · 7 jours",
+        "show_states": true,
+        "colorize_states": true
+       },
+       "series": [
+        {
+         "entity": "sensor.couloir_capteur_de_consommation_electrique_energie_maison_du_jour",
+         "name": "Consommation",
+         "type": "column",
+         "color": "#5B8DEF",
+         "unit": " kWh",
+         "float_precision": 1,
+         "transform": "return x / 1000;",
+         "group_by": {
+          "func": "max",
+          "duration": "1d"
+         }
+        }
+       ],
+       "apex_config": {
+        "chart": {
+         "background": "transparent",
+         "toolbar": {
+          "show": false
+         },
+         "zoom": {
+          "enabled": false
+         },
+         "parentHeightOffset": 0,
+         "fontFamily": "inherit",
+         "animations": {
+          "enabled": true,
+          "easing": "easeinout",
+          "speed": 900,
+          "animateGradually": {
+           "enabled": true,
+           "delay": 160
+          },
+          "dynamicAnimation": {
+           "enabled": true,
+           "speed": 420
+          }
+         },
+         "height": 260
+        },
+        "grid": {
+         "borderColor": "rgba(255,255,255,.06)",
+         "strokeDashArray": 4,
+         "padding": {
+          "left": 4,
+          "right": 4
+         }
+        },
+        "dataLabels": {
+         "enabled": false
+        },
+        "legend": {
+         "show": false
+        },
+        "tooltip": {
+         "theme": "dark",
+         "x": {
+          "format": "ddd dd MMM"
+         }
+        },
+        "xaxis": {
+         "axisBorder": {
+          "show": false
+         },
+         "axisTicks": {
+          "show": false
+         },
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "yaxis": {
+         "labels": {
+          "style": {
+           "colors": "#8B95A7",
+           "fontSize": "11px"
+          }
+         }
+        },
+        "plotOptions": {
+         "bar": {
+          "borderRadius": 6,
+          "columnWidth": "46%",
+          "borderRadiusApplication": "end"
+         }
+        },
+        "fill": {
+         "type": "gradient",
+         "gradient": {
+          "shade": "dark",
+          "type": "vertical",
+          "gradientToColors": [
+           "#A78BFA"
+          ],
+          "opacityFrom": 0.95,
+          "opacityTo": 0.55,
+          "stops": [
+           0,
+           100
+          ]
+         }
+        }
+       },
+       "grid_options": {
+        "columns": "full"
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#5B8DEF59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #5B8DEF2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card #header__title{font-size:15px;font-weight:600;letter-spacing:-.01em}ha-card #header__states{opacity:.95}"
+       },
+       "span": {
+        "start": "day",
+        "offset": "-6d"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Répartition & réglages",
+       "heading_style": "title",
+       "icon": "mdi:tune-variant"
+      },
+      {
+       "type": "tile",
+       "entity": "input_number.prix_du_kwh_alpiq",
+       "name": "Prix du kWh",
+       "icon": "mdi:cash",
+       "color": "green",
+       "features": [
+        {
+         "type": "numeric-input",
+         "style": "buttons"
+        }
+       ],
+       "grid_options": {
+        "columns": 12,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.capteur_de_consommation_electrique_electric_energy_consumption",
+       "name": "Index compteur",
+       "icon": "mdi:counter",
+       "color": "blue",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.voiture_en_charge",
+       "name": "Recharge VE",
+       "icon": "mdi:ev-station",
+       "color": "purple",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Maison",
+   "path": "maison",
+   "icon": "mdi:home-heart",
+   "type": "sections",
+   "max_columns": 4,
+   "sections": [
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Accueil"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Énergie"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#A78BFA26,#0e121bf5);border:1px solid #A78BFA8c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#A78BFA;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         },
+         "name": "Maison"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Sécurité"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-left",
+         "name": "Réduire",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "off"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#A78BFA26,#0e121bf5);border:1px solid #A78BFA8c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#A78BFA;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #34D3991f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-right",
+         "name": "Réduire",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "on"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Pièces",
+       "heading_style": "title",
+       "icon": "mdi:floor-plan"
+      },
+      {
+       "type": "area",
+       "area": "salon",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.00s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "area",
+       "area": "cuisine",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.04s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "area",
+       "area": "cinema",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.08s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#A78BFA59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #A78BFA2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "area",
+       "area": "billiard",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.12s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "area",
+       "area": "dressing",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.16s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#5B8DEF59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #5B8DEF2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      },
+      {
+       "type": "area",
+       "area": "chambre",
+       "display_type": "compact",
+       "alert_classes": [
+        "motion",
+        "occupancy"
+       ],
+       "features": [
+        {
+         "type": "area-controls"
+        }
+       ],
+       "navigation_path": "/dashboard-nexus/maison",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.20s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#F8717159;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #F871712b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Volets & Vélux",
+       "heading_style": "title",
+       "icon": "mdi:window-shutter-open"
+      },
+      {
+       "type": "tile",
+       "entity": "cover.volet_cuisine",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.volet_dressing",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.volet_billard",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.volet_cinema",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.velux_cuisine",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "cover.velux_chambre",
+       "features": [
+        {
+         "type": "cover-open-close"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Climatisation",
+       "heading_style": "title",
+       "icon": "mdi:air-conditioner"
+      },
+      {
+       "type": "tile",
+       "entity": "climate.salon",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "climate.cinema",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "climate.chambre",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "climate.chambre_daphne",
+       "features": [
+        {
+         "type": "target-temperature"
+        },
+        {
+         "type": "climate-hvac-modes",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 3
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Ambiances & Média",
+       "heading_style": "title",
+       "icon": "mdi:playlist-music-outline"
+      },
+      {
+       "type": "grid",
+       "columns": 3,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "name": "Matin",
+         "icon": "mdi:weather-sunset-up",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.ambiance_matin"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.04s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#FBBF2459;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #FBBF242b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#FBBF24;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Après-midi",
+         "icon": "mdi:weather-sunny",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.ambiance_apres_midi"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.07s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#22D3EE;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        },
+        {
+         "type": "button",
+         "name": "Soirée",
+         "icon": "mdi:weather-night",
+         "show_state": false,
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "script.turn_on",
+          "target": {
+           "entity_id": "script.ambiance_soiree"
+          }
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:16px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#A78BFA59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #A78BFA2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card ha-state-icon{color:#A78BFA;transition:transform .3s cubic-bezier(.22,.61,.36,1)}ha-card:hover ha-state-icon{transform:scale(1.14)}ha-card div.name{font-size:12.5px;font-weight:600;letter-spacing:.01em}"
+         }
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.tele",
+       "name": "Télé",
+       "features": [
+        {
+         "type": "media-player-volume-slider"
+        }
+       ],
+       "grid_options": {
+        "columns": 12,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.ampli_4",
+       "name": "Ampli",
+       "features": [
+        {
+         "type": "media-player-playback"
+        }
+       ],
+       "grid_options": {
+        "columns": 12,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "input_number.temperature_piscine",
+       "name": "Piscine",
+       "icon": "mdi:pool",
+       "color": "cyan",
+       "features": [
+        {
+         "type": "numeric-input",
+         "style": "slider"
+        }
+       ],
+       "grid_options": {
+        "columns": 12,
+        "rows": 2
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Sécurité",
+   "path": "securite",
+   "icon": "mdi:shield-home-outline",
+   "type": "sections",
+   "max_columns": 4,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "alarm_control_panel.alarmo",
+     "show_name": true
+    },
+    {
+     "type": "entity",
+     "entity": "binary_sensor.detecteur_fuite_water_leak",
+     "show_name": true,
+     "color": "red"
+    },
+    {
+     "type": "entity",
+     "entity": "binary_sensor.batterie_faible_maison",
+     "show_name": true,
+     "color": "amber"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Accueil"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Énergie"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         },
+         "name": "Maison"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#34D39926,#0e121bf5);border:1px solid #34D3998c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#34D399;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         },
+         "name": "Sécurité"
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-left",
+         "name": "Réduire",
+         "show_name": true,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "off"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "button",
+         "icon": "mdi:view-dashboard-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/accueil"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #22D3EE1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#22D3EE8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#22D3EE}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:lightning-bolt-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/energie"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #FBBF241f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#FBBF248c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#FBBF24}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:home-heart",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/maison"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px solid #A78BFA1f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#A78BFA8c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#A78BFA}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:shield-home-outline",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-nexus/securite"
+         },
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#34D39926,#0e121bf5);border:1px solid #34D3998c;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#34D3998c}ha-card ha-state-icon{color:#34D399;transition:color .25s}ha-card:hover ha-state-icon{color:#34D399}ha-card div.name{color:#E6EAF2;font-weight:600;font-size:13px}"
+         }
+        },
+        {
+         "type": "button",
+         "icon": "mdi:dock-right",
+         "name": "Réduire",
+         "show_name": false,
+         "show_state": false,
+         "tap_action": {
+          "action": "toggle"
+         },
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "card_mod": {
+          "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(150deg,#1c2333e6,#0e121bf2);border:1px dashed #8B95A71f;border-radius:14px;box-shadow:0 8px 22px -14px #000000cc;transition:transform .25s,border-color .25s}ha-card:hover{transform:translateY(-2px);border-color:#8B95A78c}ha-card ha-state-icon{color:#8B95A7;transition:color .25s}ha-card:hover ha-state-icon{color:#8B95A7}ha-card div.name{color:#8B95A7;font-weight:600;font-size:13px}"
+         }
+        }
+       ],
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "input_boolean.nexus_navigation_compacte",
+         "state": "on"
+        }
+       ],
+       "grid_options": {
+        "columns": "full"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Alarme",
+       "heading_style": "title",
+       "icon": "mdi:shield-lock-outline"
+      },
+      {
+       "type": "tile",
+       "entity": "alarm_control_panel.alarmo",
+       "name": "Alarmo",
+       "features": [
+        {
+         "type": "alarm-modes",
+         "modes": [
+          "armed_home",
+          "armed_away",
+          "disarmed"
+         ]
+        }
+       ],
+       "grid_options": {
+        "columns": 12,
+        "rows": 3
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{{% if states(config.entity) in ['unavailable','unknown','None'] %}--primary-text-color:transparent;--secondary-text-color:transparent;--state-icon-color:transparent;pointer-events:none;background-image:linear-gradient(100deg,#fff0 18%,#ffffff14 40%,#fff0 62%);background-size:460px 100%;background-repeat:no-repeat;animation:nxSh 1.6s linear infinite;{% endif %}}@keyframes nxSh{0%{background-position:-460px 0}to{background-position:460px 0}}"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "input_boolean.mode_absent",
+       "name": "Mode absent",
+       "icon": "mdi:home-export-outline",
+       "color": "amber",
+       "features": [
+        {
+         "type": "toggle"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "timer.vigilance_mode_absent",
+       "name": "Vigilance",
+       "icon": "mdi:timer-outline",
+       "color": "purple",
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 2,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Détections",
+       "heading_style": "title",
+       "icon": "mdi:motion-sensor"
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.camera_jardin_personne",
+       "name": "Jardin",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.terrasse_personne",
+       "name": "Terrasse",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.porte_d_entree_personne",
+       "name": "Entrée",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.garage_motion",
+       "name": "Garage",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.detecteur_fuite_water_leak",
+       "name": "Fuite d'eau",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.batterie_faible_maison",
+       "name": "Batterie faible",
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": 1
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Caméras",
+       "heading_style": "title",
+       "icon": "mdi:cctv"
+      },
+      {
+       "type": "picture-entity",
+       "entity": "camera.camera_jardin_fluide",
+       "name": "Jardin",
+       "camera_view": "auto",
+       "show_state": false,
+       "show_name": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 4
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.00s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{overflow:hidden}ha-card img{transition:transform .5s cubic-bezier(.22,.61,.36,1)}ha-card:hover img{transform:scale(1.04)}"
+       }
+      },
+      {
+       "type": "picture-entity",
+       "entity": "camera.terrasse_fluide",
+       "name": "Terrasse",
+       "camera_view": "auto",
+       "show_state": false,
+       "show_name": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 4
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{overflow:hidden}ha-card img{transition:transform .5s cubic-bezier(.22,.61,.36,1)}ha-card:hover img{transform:scale(1.04)}"
+       }
+      },
+      {
+       "type": "picture-entity",
+       "entity": "camera.porte_d_entree_instantanes_fluide",
+       "name": "Porte d'entrée",
+       "camera_view": "auto",
+       "show_state": false,
+       "show_name": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 4
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.10s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{overflow:hidden}ha-card img{transition:transform .5s cubic-bezier(.22,.61,.36,1)}ha-card:hover img{transform:scale(1.04)}"
+       }
+      },
+      {
+       "type": "picture-entity",
+       "entity": "camera.garage_live_view",
+       "name": "Garage",
+       "camera_view": "auto",
+       "show_state": false,
+       "show_name": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 4
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.15s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#22D3EE59;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #22D3EE2b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}ha-card{overflow:hidden}ha-card img{transition:transform .5s cubic-bezier(.22,.61,.36,1)}ha-card:hover img{transform:scale(1.04)}"
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "column_span": 4,
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Journal",
+       "heading_style": "subtitle",
+       "icon": "mdi:history"
+      },
+      {
+       "type": "logbook",
+       "target": {
+        "entity_id": [
+         "alarm_control_panel.alarmo",
+         "binary_sensor.camera_jardin_personne",
+         "binary_sensor.terrasse_personne",
+         "binary_sensor.porte_d_entree_personne",
+         "person.faure",
+         "person.maryline"
+        ]
+       },
+       "hours_to_show": 24,
+       "grid_options": {
+        "columns": "full",
+        "rows": 6
+       },
+       "card_mod": {
+        "style": "ha-card{--ha-card-background:transparent;background:linear-gradient(155deg,#1c2333f0,#0e121bf7);border:1px solid #ffffff12;border-radius:18px;box-shadow:0 12px 34px -16px #000000d9,inset 0 1px 0 #ffffff0d;animation:nxIn .55s cubic-bezier(.22,.61,.36,1) 0.05s both;transition:transform .28s,border-color .28s,box-shadow .28s}ha-card:hover{transform:translateY(-3px);border-color:#34D39959;box-shadow:0 20px 46px -18px #000000e6,0 0 0 1px #34D3992b}@keyframes nxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
