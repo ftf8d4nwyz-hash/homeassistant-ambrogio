@@ -52,10 +52,12 @@ from .const import (
     ATTR_LAST_PULL,
     ATTR_LAST_STATE,
     ATTR_LAST_WAKE_UP,
+    ATTR_LAST_TRACE_POSITION,
     ROBOT_MODELS,
     ROBOT_STATES,
     ROBOT_WORKING_STATES,
     ROBOT_WAKE_UP_INTERVAL,
+    ROBOT_TRACE_POSITION_INTERVAL,
     ROBOT_ERRORS,
 )
 
@@ -100,8 +102,9 @@ class AmbrogioDataUpdateCoordinator(DataUpdateCoordinator):
                 ATTR_LAST_COMM: None,
                 ATTR_LAST_SEEN: None,
                 ATTR_LAST_PULL: None,
-                ATTR_LAST_STATE: 0,
+                ATTR_LAST_STATE: None,
                 ATTR_LAST_WAKE_UP: None,
+                ATTR_LAST_TRACE_POSITION: None,
             }
         self._loop = asyncio.get_event_loop()
 
@@ -291,20 +294,36 @@ class AmbrogioDataUpdateCoordinator(DataUpdateCoordinator):
             mower[ATTR_LAST_SEEN] = self._convert_datetime_from_api(data["lastSeen"])
         mower[ATTR_LAST_PULL] = self._get_datetime_now()
 
+        # ATTR_STATE holds the state name, ROBOT_WORKING_STATES the state numbers,
+        # so ATTR_WORKING is the flag to compare against.
+        _working = mower.get(ATTR_WORKING, False)
+
         # If lawn mower is working send a wake_up command every ROBOT_WAKE_UP_INTERVAL seconds
-        if mower.get(ATTR_STATE) in ROBOT_WORKING_STATES and (
+        if _working and (
             mower.get(ATTR_LAST_WAKE_UP) is None
             or (self._get_datetime_now() - mower.get(ATTR_LAST_WAKE_UP)).total_seconds()
             > ROBOT_WAKE_UP_INTERVAL
         ):
             self.hass.async_create_task(self.async_wake_up(imei))
+        # If lawn mower is working ask for a fresh position every
+        # ROBOT_TRACE_POSITION_INTERVAL seconds, the mower only reports its
+        # location on request
+        if _working and (
+            mower.get(ATTR_LAST_TRACE_POSITION) is None
+            or (
+                self._get_datetime_now() - mower.get(ATTR_LAST_TRACE_POSITION)
+            ).total_seconds()
+            > ROBOT_TRACE_POSITION_INTERVAL
+        ):
+            mower[ATTR_LAST_TRACE_POSITION] = self._get_datetime_now()
+            self.hass.async_create_task(self.async_trace_position(imei))
         # State changed
-        if mower.get(ATTR_STATE) != mower.get(ATTR_LAST_STATE):
+        elif mower.get(ATTR_STATE) != mower.get(ATTR_LAST_STATE):
             # If lawn mower is now working send trace_position command
-            if mower.get(ATTR_STATE) in ROBOT_WORKING_STATES:
+            if _working:
+                mower[ATTR_LAST_TRACE_POSITION] = self._get_datetime_now()
                 self.hass.async_create_task(self.async_trace_position(imei))
-            # Set new state to last stateus
-            mower[ATTR_LAST_STATE] = mower.get(ATTR_STATE)
+        mower[ATTR_LAST_STATE] = mower.get(ATTR_STATE)
 
         self.data[imei] = mower
 
